@@ -65,7 +65,9 @@ const Debroussaillage: React.FC = () => {
             </header>
 
             <main className="flex-grow">
-                <Hero />
+                <div id="accueil">
+                    <Hero />
+                </div>
 
                 <div id="devis-form" className="bg-stone-50 py-16 px-4 sm:px-6 scroll-mt-20">
                     <div className="max-w-xl mx-auto">
@@ -73,11 +75,19 @@ const Debroussaillage: React.FC = () => {
                     </div>
                 </div>
 
-                <Benefits />
-                <Testimonials />
-                <HowItWorks />
+                <div id="avantages">
+                    <Benefits />
+                </div>
+                <div id="temoignages">
+                    <Testimonials />
+                </div>
+                <div id="processus">
+                    <HowItWorks />
+                </div>
                 <Reassurance />
-                <FAQ />
+                <div id="faq">
+                    <FAQ />
+                </div>
             </main>
 
             <Footer onShowLegal={() => setModalType('legal')} onShowPrivacy={() => setModalType('privacy')} />
