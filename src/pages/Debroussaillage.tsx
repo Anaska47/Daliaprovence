@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle, X } from 'lucide-react';
 import Hero from '../components/Hero';
 import LeadForm from '../components/LeadForm';
@@ -13,13 +14,15 @@ import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
 
 const Debroussaillage: React.FC = () => {
+    const navigate = useNavigate();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [showTopNotification, setShowTopNotification] = useState(false);
     const [modalType, setModalType] = useState<'legal' | 'privacy' | null>(null);
 
     const handleFormSuccess = () => {
         setFormSubmitted(true);
-        setShowTopNotification(true);
+        // Redirection vers la page de remerciement pour le tracking Google Ads
+        navigate('/merci');
     };
 
     useEffect(() => {
