@@ -4,9 +4,6 @@ import { FormStatus, LeadFormData } from '../types';
 import { Send, CheckCircle, Loader2, ShieldCheck } from 'lucide-react';
 
 // --- CONFIGURATION FINALE ---
-const GOOGLE_ADS_ID = "AW-17636336700"; 
-// REMPLACEZ 'LABEL_ICI' par le label trouvé dans Google Ads (ex: "AbC123Xyz")
-const GOOGLE_ADS_LABEL = "LABEL_ICI"; 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysaGx-v11vf0-mc6OM3FbY1hYhAh4DyZ2UjZzCBPUYsjZ-YmSDItx3--D9rVof0RaUwg/exec";
 // ----------------------------
 
@@ -46,12 +43,18 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
         }),
       });
 
-      // 2. Déclenchement de la conversion Google Ads
-      if (typeof (window as any).gtag === 'function' && GOOGLE_ADS_LABEL !== "LABEL_ICI") {
-        (window as any).gtag('event', 'conversion', {
-          'send_to': `${GOOGLE_ADS_ID}/${GOOGLE_ADS_LABEL}`,
-          'value': 1.0,
-          'currency': 'EUR'
+      // 2. Déclenchement via Google Tag Manager (GTM)
+      // On pousse un événement dans le dataLayer. C'est GTM qui se chargera d'envoyer ça à Google Ads.
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          'event': 'generate_lead',
+          'user_data': {
+            'email_address': null, // On ne demande pas l'email dans ce formulaire
+            'phone_number': formData.phone, // GTM se chargera de hacher si configuré, ou on peut le passer en clair pour test
+            'address': {
+              'region': formData.city,
+            }
+          }
         });
       }
 

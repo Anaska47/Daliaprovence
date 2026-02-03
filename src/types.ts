@@ -7,6 +7,17 @@ export interface LeadFormData {
   details: string;
 }
 
+export interface FormStatusMessage {
+  type: 'success' | 'error' | 'info';
+  content: string;
+}
+
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 export enum FormStatus {
   IDLE = 'IDLE',
   SUBMITTING = 'SUBMITTING',
