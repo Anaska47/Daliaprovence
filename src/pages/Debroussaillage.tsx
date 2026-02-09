@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle, X } from 'lucide-react';
 import Hero from '../components/Hero';
 import LeadForm from '../components/LeadForm';
+import TrustSignals from '../components/TrustSignals';
+import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import HowItWorks from '../components/HowItWorks';
@@ -12,6 +14,7 @@ import FAQ from '../components/FAQ';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
+import { motion } from 'framer-motion';
 
 const Debroussaillage: React.FC = () => {
     const navigate = useNavigate();
@@ -21,7 +24,6 @@ const Debroussaillage: React.FC = () => {
 
     const handleFormSuccess = () => {
         setFormSubmitted(true);
-        // Redirection vers la page de remerciement pour le tracking Google Ads
         navigate('/merci');
     };
 
@@ -65,29 +67,69 @@ const Debroussaillage: React.FC = () => {
             </header>
 
             <main className="flex-grow">
-                <div id="accueil">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                    id="accueil"
+                >
                     <Hero />
-                </div>
+                </motion.div>
 
-                <div id="devis-form" className="bg-stone-50 py-16 px-4 sm:px-6 scroll-mt-20">
+                <TrustSignals />
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="devis-form"
+                    className="bg-stone-50 py-16 px-4 sm:px-6 scroll-mt-20"
+                >
                     <div className="max-w-xl mx-auto">
                         <LeadForm onSuccess={handleFormSuccess} source="Page Débroussaillage" />
                     </div>
-                </div>
+                </motion.div>
 
-                <div id="avantages">
+                <Gallery />
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="avantages"
+                >
                     <Benefits />
-                </div>
-                <div id="temoignages">
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="temoignages"
+                >
                     <Testimonials />
-                </div>
-                <div id="processus">
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="processus"
+                >
                     <HowItWorks />
-                </div>
+                </motion.div>
                 <Reassurance />
-                <div id="faq">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="faq"
+                >
                     <FAQ />
-                </div>
+                </motion.div>
             </main>
 
             <Footer onShowLegal={() => setModalType('legal')} onShowPrivacy={() => setModalType('privacy')} />

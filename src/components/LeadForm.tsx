@@ -29,7 +29,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus(FormStatus.SUBMITTING);
-    
+
     try {
       // 1. Envoi au Google Sheets (Backend)
       await fetch(GOOGLE_SCRIPT_URL, {
@@ -43,14 +43,37 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
         }),
       });
 
-      // 2. Déclenchement via Google Tag Manager (GTM)
-      // On pousse un événement dans le dataLayer. C'est GTM qui se chargera d'envoyer ça à Google Ads.
+      // 2. Déclenchement via Google Tag Manager (GTM) et Google Ads Enhanced Conversions
+      // On prépare les données utilisateur pour le suivi avancé
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        // Normalisation du numéro de téléphone (E.164) : supprimer les espaces et s'assurer qu'il commence par +33 si nécessaire
+        let formattedPhone = formData.phone.replace(/\s+/g, '');
+        if (formattedPhone.startsWith('0')) {
+          formattedPhone = '+33' + formattedPhone.substring(1);
+        }
+
+        (window as any).gtag('set', 'user_data', {
+          'phone_number': formattedPhone,
+          'address': {
+            'first_name': formData.name.split(' ')[0],
+            'last_name': formData.name.split(' ').slice(1).join(' ') || formData.name,
+            'region': formData.city
+          }
+        });
+
+        // Envoi de l'événement de conversion
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-16817024317/DaliaLead', // Remplacez par votre ID de conversion SI différent
+          'value': 1.0,
+          'currency': 'EUR'
+        });
+      }
+
       if (window.dataLayer) {
         window.dataLayer.push({
           'event': 'generate_lead',
           'user_data': {
-            'email_address': null, // On ne demande pas l'email dans ce formulaire
-            'phone_number': formData.phone, // GTM se chargera de hacher si configuré, ou on peut le passer en clair pour test
+            'phone_number': formData.phone,
             'address': {
               'region': formData.city,
             }
@@ -60,7 +83,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
 
       setStatus(FormStatus.SUCCESS);
       onSuccess();
-      
+
     } catch (error) {
       console.error('Erreur:', error);
       setStatus(FormStatus.ERROR);
@@ -85,7 +108,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
   return (
     <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border border-stone-100 ring-1 ring-stone-200/50 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-10 opacity-50"></div>
-      
+
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
