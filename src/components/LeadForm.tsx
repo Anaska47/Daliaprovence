@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { FormStatus, LeadFormData } from '../types';
-import { Send, CheckCircle, Loader2, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle, Loader2, ShieldCheck, MapPin, Zap, Phone, Info } from 'lucide-react';
 
 // --- CONFIGURATION FINALE ---
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysaGx-v11vf0-mc6OM3FbY1hYhAh4DyZ2UjZzCBPUYsjZ-YmSDItx3--D9rVof0RaUwg/exec";
@@ -44,9 +44,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
       });
 
       // 2. Déclenchement via Google Tag Manager (GTM) et Google Ads Enhanced Conversions
-      // On prépare les données utilisateur pour le suivi avancé
       if (typeof window !== 'undefined' && (window as any).gtag) {
-        // Normalisation du numéro de téléphone (E.164) : supprimer les espaces et s'assurer qu'il commence par +33 si nécessaire
         let formattedPhone = formData.phone.replace(/\s+/g, '');
         if (formattedPhone.startsWith('0')) {
           formattedPhone = '+33' + formattedPhone.substring(1);
@@ -61,9 +59,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
           }
         });
 
-        // Envoi de l'événement de conversion
         (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-16817024317/DaliaLead', // Remplacez par votre ID de conversion SI différent
+          'send_to': 'AW-16817024317/DaliaLead',
           'value': 1.0,
           'currency': 'EUR'
         });
@@ -93,38 +90,44 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
 
   if (status === FormStatus.SUCCESS) {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-8 text-center space-y-4 animate-in fade-in zoom-in duration-500 border border-emerald-100">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full mb-4">
-          <CheckCircle className="w-10 h-10" />
+      <div className="bg-white rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] p-10 text-center space-y-6 animate-in fade-in zoom-in duration-500 border border-emerald-100">
+        <div className="inline-flex items-center justify-center w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full mb-2">
+          <CheckCircle className="w-12 h-12" />
         </div>
-        <h3 className="text-2xl font-bold text-stone-900 leading-tight">Demande enregistrée !</h3>
-        <p className="text-stone-600 leading-relaxed max-w-sm mx-auto">
-          Merci <span className="font-bold text-emerald-800">{formData.name}</span>. Nous vous recontactons au <span className="font-bold text-stone-900">{formData.phone}</span> sous 24 à 48 heures.
+        <div>
+          <h3 className="text-3xl font-extrabold text-stone-900 leading-tight">C'est envoyé !</h3>
+          <p className="text-stone-500 mt-2">Nous analysons votre terrain immédiatement.</p>
+        </div>
+        <p className="text-stone-600 leading-relaxed max-w-sm mx-auto bg-stone-50 p-4 rounded-2xl">
+          Merci <span className="font-bold text-emerald-800">{formData.name}</span>. Votre devis gratuit vous sera communiqué par téléphone au <span className="font-bold text-stone-900">{formData.phone}</span> sous 24h.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border border-stone-100 ring-1 ring-stone-200/50 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-10 opacity-50"></div>
+    <div className="bg-white rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 sm:p-12 border border-stone-100 ring-1 ring-stone-200/50 relative overflow-hidden group">
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-bl-full -z-10 opacity-30"></div>
 
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-          <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-emerald-600">Devis gratuit sous 48h</span>
-        </div>
-        <h2 className="text-3xl font-bold text-stone-900 mb-2 tracking-tight">Votre devis express</h2>
-        <p className="text-stone-500 text-sm leading-relaxed">
-          Complétez ce formulaire pour une mise en conformité rapide de votre terrain.
+      <div className="mb-8 text-center sm:text-left">
+        <h3 className="text-2xl sm:text-4xl font-black text-stone-900 mb-2 tracking-tight">
+          Obtenez votre devis gratuit sous 24h
+        </h3>
+        <p className="text-emerald-700 font-bold text-base sm:text-lg mb-4">
+          Intervention rapide dans le Var (83) • Sans engagement
         </p>
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-50 rounded-full border border-amber-100">
+          <Info className="w-3 h-3 text-amber-600" />
+          <span className="text-[10px] font-black uppercase tracking-wider text-amber-700">Étape 1 sur 1 – Demande rapide (30 secondes)</span>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5" id="devis-form">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-1.5">
-            <label htmlFor="name" className="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">
-              Nom complet / Entreprise
+            <label htmlFor="name" className="text-[11px] font-bold uppercase tracking-widest text-stone-500 ml-1">
+              Nom & Prénom
             </label>
             <input
               required
@@ -133,13 +136,16 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
               type="text"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Ex: Paul Martin"
-              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none transition-all"
+              placeholder="Ex: Marc Durand"
+              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all placeholder:text-stone-300 font-medium"
             />
           </div>
           <div className="space-y-1.5">
-            <label htmlFor="phone" className="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">
-              Numéro de téléphone
+            <label htmlFor="phone" className="flex flex-col gap-0.5 ml-1">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-stone-500 flex items-center gap-1.5">
+                <Phone className="w-3 h-3 text-emerald-600" /> Téléphone
+              </span>
+              <span className="text-[9px] font-medium text-emerald-600/70 lowercase italic">Indispensable pour vous rappeler rapidement.</span>
             </label>
             <input
               required
@@ -148,16 +154,16 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="06 XX XX XX XX"
-              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none transition-all"
+              placeholder="06 -- -- -- --"
+              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all placeholder:text-stone-300 font-medium"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-1.5">
-            <label htmlFor="city" className="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">
-              Ville du terrain
+            <label htmlFor="city" className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-stone-500 ml-1">
+              <MapPin className="w-3 h-3 text-emerald-600" /> Commune
             </label>
             <input
               required
@@ -167,29 +173,28 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
               value={formData.city}
               onChange={handleChange}
               placeholder="Ex: Brignoles"
-              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none transition-all"
+              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all placeholder:text-stone-300 font-medium"
             />
           </div>
           <div className="space-y-1.5">
-            <label htmlFor="surface" className="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">
-              Surface estimée (m²)
+            <label htmlFor="surface" className="text-[11px] font-bold uppercase tracking-widest text-stone-500 ml-1">
+              Surface Approx.
             </label>
             <input
-              required
               id="surface"
               name="surface"
               type="text"
               value={formData.surface}
               onChange={handleChange}
-              placeholder="Ex: 1500 m²"
-              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none transition-all"
+              placeholder="Ex : 500m² (facultatif si inconnu)"
+              className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all placeholder:text-stone-300 font-medium"
             />
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="details" className="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">
-            Détails (accès, pente, ronces...)
+          <label htmlFor="details" className="text-[11px] font-bold uppercase tracking-widest text-stone-500 ml-1">
+            Détails de votre besoin
           </label>
           <textarea
             id="details"
@@ -197,31 +202,46 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
             rows={3}
             value={formData.details}
             onChange={handleChange}
-            placeholder="Décrivez brièvement l'état actuel de votre terrain..."
-            className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none transition-all resize-none"
+            placeholder="Ex : terrain en friche, ronces hautes, arbre tombé, pente…"
+            className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all placeholder:text-stone-300 font-medium resize-none shadow-inner"
           ></textarea>
         </div>
 
-        <button
-          disabled={status === FormStatus.SUBMITTING}
-          type="submit"
-          className="w-full py-5 bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-xl rounded-2xl shadow-xl shadow-emerald-900/10 transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed group active:scale-[0.98]"
-        >
-          {status === FormStatus.SUBMITTING ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
-          ) : (
-            <>
-              Envoyer ma demande
-              <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </>
-          )}
-        </button>
+        {/* BLOC RASSURANCE */}
+        <div className="bg-emerald-50/50 rounded-2xl p-5 space-y-2 border border-emerald-100/50">
+          <div className="flex items-center gap-2 text-stone-700 font-bold text-xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            Respect strict des obligations DFCI / OLD
+          </div>
+          <div className="flex items-center gap-2 text-stone-700 font-bold text-xs">
+            <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
+            Intervention possible sous 48h
+          </div>
+          <div className="flex items-center gap-2 text-stone-700 font-bold text-xs">
+            <CheckCircle className="w-4 h-4 text-emerald-600" />
+            Devis gratuit et sans engagement
+          </div>
+        </div>
 
-        <div className="flex items-center justify-center gap-2 pt-4 border-t border-stone-100">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">
-            Mise en conformité DFCI & Devis 100% gratuit
-          </span>
+        <div className="space-y-4">
+          <button
+            disabled={status === FormStatus.SUBMITTING}
+            type="submit"
+            className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-black text-lg sm:text-xl rounded-2xl shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] group"
+          >
+            {status === FormStatus.SUBMITTING ? (
+              <Loader2 className="w-6 h-6 animate-spin" />
+            ) : (
+              <>
+                Recevoir mon devis gratuit
+                <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </>
+            )}
+          </button>
+
+          <p className="text-[10px] text-stone-400 text-center italic">
+            Vos informations sont utilisées uniquement pour vous recontacter. Aucun spam.
+          </p>
         </div>
       </form>
     </div>

@@ -83,12 +83,9 @@ const Debroussaillage: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    id="devis-form"
-                    className="bg-stone-50 py-16 px-4 sm:px-6 scroll-mt-20"
+                    id="prestations"
                 >
-                    <div className="max-w-xl mx-auto">
-                        <LeadForm onSuccess={handleFormSuccess} source="Page Débroussaillage" />
-                    </div>
+                    <Benefits />
                 </motion.div>
 
                 <Gallery />
@@ -98,38 +95,33 @@ const Debroussaillage: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    id="avantages"
-                >
-                    <Benefits />
-                </motion.div>
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    id="temoignages"
-                >
-                    <Testimonials />
-                </motion.div>
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    id="processus"
-                >
-                    <HowItWorks />
-                </motion.div>
-                <Reassurance />
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
                     id="faq"
                 >
                     <FAQ />
                 </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="devis-form"
+                    className="bg-emerald-900 py-24 px-4 sm:px-6 scroll-mt-20 relative overflow-hidden"
+                >
+                    {/* Background decoration for form section */}
+                    <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent opacity-10"></div>
+                    <div className="max-w-xl mx-auto relative z-10">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Prêt pour votre mise en conformité ?</h2>
+                            <p className="text-emerald-100/80">Recevez votre devis gratuit sous 24h.</p>
+                        </div>
+                        <LeadForm onSuccess={handleFormSuccess} source="Page Débroussaillage Var" />
+                    </div>
+                </motion.div>
+
+                {/* Testimonials and Process removed or simplified for landing page punchiness, keeping them only if requested. 
+                    Based on "Sections recommandées", I'll stick to the requested ones.
+                */}
             </main>
 
             <Footer onShowLegal={() => setModalType('legal')} onShowPrivacy={() => setModalType('privacy')} />

@@ -1,38 +1,65 @@
 
 import React from 'react';
-import { Shield, Sparkles, Truck } from 'lucide-react';
+import { Target, Leaf, Trash2, Zap, ShieldCheck } from 'lucide-react';
 
 const Benefits: React.FC = () => {
   const cards = [
     {
-      icon: <Shield className="w-8 h-8 text-amber-500" />,
-      title: "Mise en conformité DFCI",
-      desc: "Respect strict des obligations légales de débroussaillage pour votre sécurité incendie."
+      icon: <Target className="w-10 h-10 text-emerald-600" />,
+      title: "Précision Chirurgicale",
+      desc: "Broyage fin et coupe rase même sur les terrains les plus difficiles et accidentés."
     },
     {
-      icon: <Sparkles className="w-8 h-8 text-amber-500" />,
-      title: "Finitions propres",
-      desc: "Coupe rase et broyage précis pour un terrain net, esthétique et accessible."
+      icon: <ShieldCheck className="w-10 h-10 text-emerald-600" />,
+      title: "Zéro Amende",
+      desc: "Nous garantissons une mise en conformité totale avec les arrêtés DFCI du Var."
     },
     {
-      icon: <Truck className="w-8 h-8 text-amber-500" />,
-      title: "Évacuation (option)",
-      desc: "Gestion complète des déchets verts si vous ne souhaitez pas de broyage sur place."
+      icon: <Trash2 className="w-10 h-10 text-emerald-600" />,
+      title: "Gestion des Déchets",
+      desc: "Broyage sur place ou évacuation complète selon vos besoins. Chantier propre."
     }
   ];
 
   return (
-    <section className="py-20 px-6 bg-white">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-stone-900 mb-12">Nos Engagements</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {cards.map((card, idx) => (
-            <div key={idx} className="flex flex-col items-center text-center p-6 rounded-2xl bg-stone-50 border border-stone-100 transition-hover hover:border-amber-200">
-              <div className="mb-4">{card.icon}</div>
-              <h3 className="text-xl font-bold text-stone-900 mb-2">{card.title}</h3>
-              <p className="text-stone-600 text-sm leading-relaxed">{card.desc}</p>
+    <section className="py-24 px-6 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-black text-stone-900 mb-6 tracking-tight leading-tight">
+              Un terrain <span className="text-emerald-700">impeccable</span>, en toute sérénité.
+            </h2>
+            <p className="text-lg text-stone-600 mb-8 leading-relaxed">
+              DaliaProvence intervient avec du matériel professionnel pour transformer vos friches en espaces sécurisés et accessibles. Pas de demi-mesure, un résultat net.
+            </p>
+            <div className="space-y-4">
+              {[
+                "Équipement spécialisé fortes pentes",
+                "Respect de la biodiversité locale",
+                "Intervention sans dégâts sur vos arbres",
+                "Conseils personnalisés pour l'entretien"
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 text-stone-700 font-bold">
+                  <div className="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
+                    <Zap className="w-3 h-3 fill-emerald-600" />
+                  </div>
+                  {item}
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="grid grid-cols-1 gap-6">
+            {cards.map((card, idx) => (
+              <div key={idx} className="flex gap-6 p-8 rounded-[2rem] bg-stone-50 border border-stone-100 hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300">
+                <div className="shrink-0">{card.icon}</div>
+                <div>
+                  <h3 className="text-xl font-black text-stone-900 mb-2">{card.title}</h3>
+                  <p className="text-stone-500 leading-relaxed text-sm">{card.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
