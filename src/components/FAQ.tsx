@@ -1,97 +1,89 @@
 
 import React, { useState } from 'react';
-import { Plus, Minus, HelpCircle, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Minus, HelpCircle, ShieldAlert } from 'lucide-react';
+
+const faqs = [
+  {
+    question: "Qu'est-ce que l'obligation de débroussaillage (OLD) dans le Var ?",
+    answer: "Dans le Var, la loi impose de débroussailler dans un rayon de 50 mètres autour de toute construction (maison, piscine, cabanon). Cette distance peut être portée à 100 mètres par arrêté préfectoral. L'objectif est de protéger votre habitation et de ralentir la progression des incendies."
+  },
+  {
+    question: "Quelle est la période idéale pour faire débroussailler mon terrain ?",
+    answer: "Il est fortement conseillé d'intervenir entre l'automne et le printemps (avant le 1er juin). Au-delà de cette date, l'utilisation d'outils mécaniques peut être interdite ou réglementée par la préfecture en raison des risques de départ de feu."
+  },
+  {
+    question: "Quels sont les risques si je ne débroussaille pas ?",
+    answer: "Le non-respect de l'obligation vous expose à une amende pouvant aller jusqu'à 30€ par m² non débroussaillé, une mise en demeure du maire, et surtout le refus d'indemnisation par votre assurance en cas de sinistre."
+  },
+  {
+    question: "Proposez-vous l'évacuation des déchets verts ?",
+    answer: "Oui, nous proposons deux solutions : soit l'évacuation complète vers un centre de valorisation agréé, soit le broyage sur place (mulching) qui permet de fertiliser votre sol naturellement et de limiter la repousse."
+  },
+  {
+    question: "Peut-on obtenir un crédit d'impôt pour ces travaux ?",
+    answer: "Le débroussaillage est considéré comme un travail d'entretien de jardin. Selon votre situation, vous pouvez bénéficier d'un crédit d'impôt de 50% au titre des services à la personne pour les travaux réalisés chez vous (résidence principale ou secondaire)."
+  }
+];
 
 const FAQ: React.FC = () => {
-  const faqs = [
-    {
-      q: "Le débroussaillage est-il obligatoire dans le Var ?",
-      a: "Oui. Dans le Var (83), le débroussaillage est une obligation légale (OLD) imposée par arrêté préfectoral. En cas de non-respect, vous risquez des amendes et une mise en demeure."
-    },
-    {
-      q: "Quels sont les risques si je ne débroussaille pas ?",
-      a: "Outre les amendes, un terrain non entretenu augmente fortement le risque incendie. En cas de sinistre, votre responsabilité peut être engagée."
-    },
-    {
-      q: "Sous combien de temps intervenez-vous ?",
-      a: "Nous intervenons rapidement, généralement sous 48h pour les mises en conformité urgentes autour de Brignoles et dans un rayon de 40 km."
-    },
-    {
-      q: "Que faites-vous des déchets verts ?",
-      a: "Nous proposons le broyage sur place ou l’évacuation complète selon vos besoins. Le chantier est laissé propre et sécurisé."
-    },
-    {
-      q: "Le devis est-il vraiment gratuit ?",
-      a: "Oui. Le devis est gratuit et sans engagement. Vous recevez une estimation claire et détaillée sous 24h."
-    },
-    {
-      q: "Dois-je connaître la surface exacte de mon terrain ?",
-      a: "Non. Une estimation approximative suffit. Nous ajustons si nécessaire après échange ou visite."
-    },
-    {
-      q: "Intervenez-vous sur terrains en pente ou difficiles ?",
-      a: "Oui. Nous disposons d’équipements adaptés aux terrains en pente, en friche ou difficiles d’accès."
-    }
-  ];
-
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
-
-  const scrollToForm = () => {
-    document.getElementById('devis-form')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 px-6 bg-stone-50/50">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-sm mb-6 border border-stone-100">
-            <HelpCircle className="w-8 h-8 text-emerald-600" />
+    <section className="py-24 px-6 bg-stone-50" id="faq">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-black uppercase tracking-widest">
+            <HelpCircle className="w-3 h-3" /> Questions fréquentes
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-stone-900 mb-4 tracking-tight">Vos questions, nos réponses</h2>
-          <p className="text-stone-500 font-medium">Tout savoir sur le débroussaillage obligatoire dans le Var (83).</p>
+          <h2 className="text-3xl md:text-5xl font-black text-stone-900 tracking-tight">
+            Tout savoir sur le <span className="text-emerald-700">débroussaillage légal</span>
+          </h2>
+          <div className="flex items-center justify-center gap-2 text-stone-500 font-medium">
+            <ShieldAlert className="w-4 h-4 text-emerald-600" />
+            <span>Conformité OLD / DFCI Var (83)</span>
+          </div>
         </div>
 
-        <div className="space-y-4 mb-20">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-white border border-stone-200/60 rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-stone-200/40">
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div 
+              key={index}
+              className={`bg-white rounded-[2rem] border transition-all duration-300 ${
+                openIndex === index ? 'border-emerald-200 shadow-xl' : 'border-stone-100 hover:border-stone-200 shadow-sm'
+              }`}
+            >
               <button
-                onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-                className="w-full flex items-center justify-between p-6 sm:p-8 text-left font-bold text-stone-900 transition-colors"
-                aria-expanded={openIdx === idx}
+                onClick={() => setOpenIndex(index === openIndex ? null : index)}
+                className="w-full px-8 py-6 text-left flex items-center justify-between gap-4"
               >
-                <span className="pr-6 text-lg sm:text-xl leading-snug">{faq.q}</span>
-                <div className={`shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-500 ${openIdx === idx ? 'bg-emerald-600 text-white rotate-180 shadow-lg shadow-emerald-600/20' : 'bg-stone-50 text-stone-400 border border-stone-100'}`}>
-                  {openIdx === idx ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                <span className="font-bold text-stone-900 md:text-lg leading-tight">
+                  {faq.question}
+                </span>
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                  openIndex === index ? 'bg-emerald-600 text-white' : 'bg-stone-100 text-stone-400'
+                }`}>
+                  {openIndex === index ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
                 </div>
               </button>
-              <div className={`grid transition-all duration-500 ease-in-out ${openIdx === idx ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                <div className="overflow-hidden">
-                  <div className="px-6 sm:px-8 pb-8 text-stone-600 text-base sm:text-lg leading-relaxed border-t border-stone-50">
-                    <div className="pt-6">
-                      {faq.a}
+              
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-8 pb-8 text-stone-500 leading-relaxed border-t border-stone-50 pt-4 italic">
+                      {faq.answer}
                     </div>
-                  </div>
-                </div>
-              </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
-        </div>
-
-        {/* MINI CTA SOUS FAQ */}
-        <div className="bg-emerald-950 rounded-[2.5rem] p-10 sm:p-14 text-center relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-[80px] -z-10 group-hover:scale-125 transition-transform duration-700"></div>
-
-          <h3 className="text-2xl sm:text-3xl font-black text-white mb-6">
-            Prêt à mettre votre terrain en conformité ?
-          </h3>
-
-          <button
-            onClick={scrollToForm}
-            className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-black px-10 py-5 rounded-2xl text-lg sm:text-xl transition-all shadow-xl shadow-amber-500/20 hover:scale-[1.03] active:scale-95 group/btn"
-          >
-            Obtenir mon devis gratuit
-            <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform" />
-          </button>
         </div>
       </div>
     </section>

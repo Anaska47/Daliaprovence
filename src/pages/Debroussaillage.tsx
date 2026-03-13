@@ -1,24 +1,23 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Hero from '../components/Hero';
 import LeadForm from '../components/LeadForm';
 import TrustSignals from '../components/TrustSignals';
 import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
-import HowItWorks from '../components/HowItWorks';
-import Reassurance from '../components/Reassurance';
 import FAQ from '../components/FAQ';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
 import PricingEstimator from '../components/PricingEstimator';
-import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
-import { useParams } from 'react-router-dom';
+import WhatsAppButton from '../components/WhatsAppButton';
+import UrgencyBanner from '../components/UrgencyBanner';
+import { motion } from 'framer-motion';
 import { getLocationBySlug } from '../data/locations';
-import { Shield, Award, MapPin, CheckCircle, X } from 'lucide-react';
+import { Shield, Award, MapPin } from 'lucide-react';
 
 const Debroussaillage: React.FC = () => {
     const navigate = useNavigate();
@@ -60,20 +59,15 @@ const Debroussaillage: React.FC = () => {
         }
         const url = location ? `https://daliaprovence.fr/debroussaillage/${location.slug}` : 'https://daliaprovence.fr/debroussaillage';
         canonical.setAttribute('href', url);
-
-        if (showTopNotification) {
-            const timer = setTimeout(() => {
-                setShowTopNotification(false);
-            }, 6000);
-            return () => clearTimeout(timer);
-        }
-    }, [showTopNotification, location]);
+    }, [location]);
 
     return (
-        <div className="min-h-screen flex flex-col selection:bg-emerald-100 relative">
+        <div className="min-h-screen flex flex-col selection:bg-emerald-100 relative pt-10 sm:pt-0">
+            <div className="fixed top-0 left-0 right-0 z-[60]">
+                <UrgencyBanner />
+            </div>
+            
             <Navbar location={cityName} />
-
-            {/* Top Notification */}
 
             <main className="flex-grow">
                 <motion.div
@@ -110,6 +104,26 @@ const Debroussaillage: React.FC = () => {
 
                 <PricingEstimator location={cityName} />
 
+                <Testimonials />
+
+                <div className="bg-emerald-950 py-24 relative overflow-hidden">
+                    {/* Background decoration */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500 rounded-full blur-[120px] opacity-10 -mr-48 -mt-48"></div>
+                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-[120px] opacity-10 -ml-48 -mb-48"></div>
+
+                    <div className="max-w-4xl mx-auto px-6 text-center space-y-8 relative z-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-900 border border-emerald-800 text-emerald-100 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+                            Offre spéciale Parrainage
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">
+                            Économisez <span className="text-amber-400">10% de plus</span> avec votre voisin
+                        </h2>
+                        <p className="text-emerald-100/60 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+                            Le débroussaillage mutualisé est plus efficace. Si vous et votre voisin commandez ensemble, vous bénéficiez tous les deux d'une remise immédiate.
+                        </p>
+                    </div>
+                </div>
+
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -122,15 +136,7 @@ const Debroussaillage: React.FC = () => {
 
                 <Gallery />
 
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    id="faq"
-                >
-                    <FAQ />
-                </motion.div>
+                <FAQ />
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -154,10 +160,6 @@ const Debroussaillage: React.FC = () => {
                         />
                     </div>
                 </motion.div>
-
-                {/* Testimonials and Process removed or simplified for landing page punchiness, keeping them only if requested. 
-                    Based on "Sections recommandées", I'll stick to the requested ones.
-                */}
             </main>
 
             <Footer 
@@ -167,6 +169,7 @@ const Debroussaillage: React.FC = () => {
             />
 
             {!formSubmitted && <StickyCTA />}
+            <WhatsAppButton />
 
             {/* Modale Juridique */}
             {modalType && (
