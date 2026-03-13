@@ -12,6 +12,7 @@ import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
 import PricingEstimator from '../components/PricingEstimator';
+import MaintenanceSubscription from '../components/MaintenanceSubscription';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import UrgencyBanner from '../components/UrgencyBanner';
@@ -103,6 +104,8 @@ const Debroussaillage: React.FC = () => {
                 </div>
 
                 <PricingEstimator location={cityName} />
+
+                <MaintenanceSubscription />
 
                 <Testimonials />
 

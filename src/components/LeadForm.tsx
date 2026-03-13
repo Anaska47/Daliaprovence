@@ -27,7 +27,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
     phone: '',
     city: initialCity,
     surface: '',
-    details: ''
+    details: '',
+    reminders: true
   });
 
   // Effect to update city if initialCity changes (e.g. navigation)
@@ -68,8 +69,9 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
 <b>👤 Nom :</b> ${escapeHTML(formData.name)}
 <b>📞 Tél :</b> <a href="tel:${formData.phone}">${escapeHTML(formData.phone)}</a>
 <b>📍 Ville :</b> ${escapeHTML(formData.city)}
-<b>📏 Surface :</b> ${escapeHTML(formData.surface || 'Non précisée')}
-<b>📝 Détails :</b> ${escapeHTML(formData.details || 'Aucun')}
+<b>📏 **Surface :** ${formData.surface || 'Non précisée'}
+📝 **Détails :** ${formData.details || 'Aucun'}
+🔔 **Rappel Annuel :** ${formData.reminders ? 'OUI' : 'NON'}
 ━━━━━━━━━━━━━━━━━━
 <b>🌍 Source :</b> ${escapeHTML(source)}
 <b>📅 Date :</b> ${new Date().toLocaleString('fr-FR')}
@@ -258,6 +260,21 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
             placeholder="Ex : terrain en friche, ronces hautes, arbre tombé, pente…"
             className="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all placeholder:text-stone-300 font-medium resize-none shadow-inner"
           ></textarea>
+        </div>
+
+        {/* Automatisation Cash Flow */}
+        <div className="flex items-start gap-3 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+          <input
+            id="reminders"
+            name="reminders"
+            type="checkbox"
+            checked={formData.reminders}
+            onChange={(e) => setFormData(prev => ({ ...prev, reminders: e.target.checked }))}
+            className="mt-1 w-5 h-5 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
+          />
+          <label htmlFor="reminders" className="text-xs text-emerald-900 font-bold leading-tight cursor-pointer">
+            Je souhaite être rappelé automatiquement l'année prochaine pour ma mise en conformité (Sérénité OLD).
+          </label>
         </div>
 
         {/* BLOC RASSURANCE */}
