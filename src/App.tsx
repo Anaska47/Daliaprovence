@@ -10,6 +10,7 @@ const App: React.FC = () => {
             <Routes>
                 <Route path="/" element={<Debroussaillage />} />
                 <Route path="/debroussaillage" element={<Debroussaillage />} />
+                <Route path="/debroussaillage/:citySlug" element={<Debroussaillage />} />
                 <Route path="/merci" element={<Merci />} />
                 {/* Placeholder for future services */}
                 {/* <Route path="/elagage" element={<Elagage />} /> */}

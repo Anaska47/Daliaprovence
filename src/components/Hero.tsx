@@ -2,7 +2,15 @@
 import React from 'react';
 import { ShieldCheck, Clock, Phone, ArrowRight } from 'lucide-react';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  location?: string;
+  description?: string;
+}
+
+const Hero: React.FC<HeroProps> = ({ 
+  location = 'Brignoles', 
+  description = 'Mise en conformité légale incendie (OLD) • Intervention rapide • Évacuation incluse.' 
+}) => {
   const scrollToForm = () => {
     document.getElementById('devis-form')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -27,11 +35,11 @@ const Hero: React.FC = () => {
         </div>
 
         <h1 className="text-4xl md:text-7xl font-extrabold leading-[1.1] tracking-tight">
-          Débroussaillage <span className="text-amber-400">professionnel</span> à Brignoles
+          Débroussaillage <span className="text-amber-400">professionnel</span> à {location}
         </h1>
 
         <p className="text-xl md:text-2xl text-emerald-50/90 font-medium max-w-2xl mx-auto leading-relaxed">
-          Mise en conformité légale incendie (OLD) • Intervention rapide • Évacuation incluse.
+          {description}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

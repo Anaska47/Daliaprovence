@@ -5,22 +5,37 @@ import { Send, CheckCircle, Loader2, ShieldCheck, MapPin, Zap, Phone, Info } fro
 
 // --- CONFIGURATION FINALE ---
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysaGx-v11vf0-mc6OM3FbY1hYhAh4DyZ2UjZzCBPUYsjZ-YmSDItx3--D9rVof0RaUwg/exec";
+
+// --- CONFIGURATION TELEGRAM ---
+// Pour obtenir ces infos :
+// 1. Créez un bot sur Telegram via @BotFather pour avoir le TOKEN
+// 2. Récupérez votre CHAT_ID via @userinfobot
+const TELEGRAM_BOT_TOKEN = "8678882944:AAEQ0W3dZiq7-3fjNFuUOUa3IFicByKK37g"; // Exemple à remplacer
+const TELEGRAM_CHAT_ID = "6939778306"; // Exemple à remplacer
 // ----------------------------
 
 interface LeadFormProps {
   onSuccess: () => void;
   source?: string;
+  initialCity?: string;
 }
 
-const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page Ads' }) => {
+const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page Ads', initialCity = '' }) => {
   const [status, setStatus] = useState<FormStatus>(FormStatus.IDLE);
   const [formData, setFormData] = useState<LeadFormData>({
     name: '',
     phone: '',
-    city: '',
+    city: initialCity,
     surface: '',
     details: ''
   });
+
+  // Effect to update city if initialCity changes (e.g. navigation)
+  React.useEffect(() => {
+    if (initialCity) {
+      setFormData(prev => ({ ...prev, city: initialCity }));
+    }
+  }, [initialCity]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -42,6 +57,44 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSuccess, source = 'Landing Page A
           source: source
         }),
       });
+
+      // Fonction pour éviter que les caractères spéciaux (<, >, &) ne bloquent l'envoi Telegram
+      const escapeHTML = (str: string) => 
+        str?.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') || '';
+
+      const telegramMessage = `
+<b>🚀 NOUVEAU LEAD - DALIA PROVENCE</b>
+━━━━━━━━━━━━━━━━━━
+<b>👤 Nom :</b> ${escapeHTML(formData.name)}
+<b>📞 Tél :</b> <a href="tel:${formData.phone}">${escapeHTML(formData.phone)}</a>
+<b>📍 Ville :</b> ${escapeHTML(formData.city)}
+<b>📏 Surface :</b> ${escapeHTML(formData.surface || 'Non précisée')}
+<b>📝 Détails :</b> ${escapeHTML(formData.details || 'Aucun')}
+━━━━━━━━━━━━━━━━━━
+<b>🌍 Source :</b> ${escapeHTML(source)}
+<b>📅 Date :</b> ${new Date().toLocaleString('fr-FR')}
+      `.trim();
+
+      try {
+        const tgResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: telegramMessage,
+            parse_mode: 'HTML',
+          }),
+        });
+        
+        const tgData = await tgResponse.json();
+        if (!tgData.ok) {
+          console.error('Erreur API Telegram:', tgData.description);
+        } else {
+          console.log('Notification Telegram envoyée avec succès !');
+        }
+      } catch (tgError) {
+        console.error('Erreur réseau Telegram:', tgError);
+      }
 
       // 2. Déclenchement via Google Tag Manager (GTM) et Google Ads Enhanced Conversions
       if (typeof window !== 'undefined' && (window as any).gtag) {

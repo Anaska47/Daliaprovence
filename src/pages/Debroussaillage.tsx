@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, X } from 'lucide-react';
 import Hero from '../components/Hero';
 import LeadForm from '../components/LeadForm';
 import TrustSignals from '../components/TrustSignals';
@@ -14,7 +13,12 @@ import FAQ from '../components/FAQ';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
+import PricingEstimator from '../components/PricingEstimator';
 import { motion } from 'framer-motion';
+import Navbar from '../components/Navbar';
+import { useParams } from 'react-router-dom';
+import { getLocationBySlug } from '../data/locations';
+import { Shield, Award, MapPin, CheckCircle, X } from 'lucide-react';
 
 const Debroussaillage: React.FC = () => {
     const navigate = useNavigate();
@@ -27,44 +31,49 @@ const Debroussaillage: React.FC = () => {
         navigate('/merci');
     };
 
+    const { citySlug } = useParams<{ citySlug: string }>();
+    const location = citySlug ? getLocationBySlug(citySlug) : null;
+    const cityName = location ? location.name : 'Brignoles';
+
     useEffect(() => {
+        // Dynamic SEO Update
+        const pageTitle = location 
+            ? `Débroussaillage à ${location.name} (${location.zipCode}) - Devis Gratuit 24h` 
+            : 'Débroussaillage Brignoles & Var (83) - Devis Gratuit 24h - Dalia Provence';
+        
+        document.title = pageTitle;
+        
+        // Update meta description
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.setAttribute('content', location 
+                ? `Besoin d'un débroussaillage à ${location.name} ? Mise en conformité OLD / DFCI rapide. Devis gratuit sous 24h par des experts locaux.`
+                : 'Service de débroussaillage professionnel dans le Var. Mise en conformité incendie légale (OLD), intervention rapide à Brignoles et alentours.');
+        }
+
+        // Canonical Tag
+        let canonical = document.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+            canonical = document.createElement('link');
+            canonical.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonical);
+        }
+        const url = location ? `https://daliaprovence.fr/debroussaillage/${location.slug}` : 'https://daliaprovence.fr/debroussaillage';
+        canonical.setAttribute('href', url);
+
         if (showTopNotification) {
             const timer = setTimeout(() => {
                 setShowTopNotification(false);
             }, 6000);
             return () => clearTimeout(timer);
         }
-    }, [showTopNotification]);
+    }, [showTopNotification, location]);
 
     return (
         <div className="min-h-screen flex flex-col selection:bg-emerald-100 relative">
-            {/* Top Notification */}
-            {showTopNotification && (
-                <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md animate-in slide-in-from-top duration-500">
-                    <div className="bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between border border-emerald-500/50 backdrop-blur-sm">
-                        <div className="flex items-center gap-3">
-                            <CheckCircle className="w-5 h-5 text-emerald-100" />
-                            <p className="text-sm font-medium">Votre demande a été transmise avec succès.</p>
-                        </div>
-                        <button
-                            onClick={() => setShowTopNotification(false)}
-                            className="p-1 hover:bg-white/10 rounded-lg transition-colors"
-                            aria-label="Fermer la notification"
-                        >
-                            <X className="w-4 h-4" />
-                        </button>
-                    </div>
-                </div>
-            )}
+            <Navbar location={cityName} />
 
-            <header className="bg-emerald-900 text-white py-4 px-6 sticky top-0 z-40 shadow-sm flex justify-between items-center border-b border-white/5">
-                <div className="text-xl font-bold tracking-tight">
-                    <span className="text-amber-400">Dalia</span>Provence
-                </div>
-                <div className="text-[10px] uppercase tracking-widest font-bold opacity-80 hidden sm:block bg-white/10 px-3 py-1 rounded-full">
-                    Secteur Brignoles • Var (83)
-                </div>
-            </header>
+            {/* Top Notification */}
 
             <main className="flex-grow">
                 <motion.div
@@ -73,10 +82,33 @@ const Debroussaillage: React.FC = () => {
                     transition={{ duration: 0.8 }}
                     id="accueil"
                 >
-                    <Hero />
+                    <Hero 
+                        location={cityName} 
+                        description={location?.description} 
+                    />
                 </motion.div>
 
                 <TrustSignals />
+
+                {/* Trust Badges - Premium addition */}
+                <div className="bg-emerald-50/30 py-8 border-y border-emerald-100">
+                    <div className="max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-16">
+                        <div className="flex items-center gap-3 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                            <Shield className="w-6 h-6 text-emerald-800" />
+                            <span className="font-bold text-emerald-950 uppercase tracking-tighter text-xs">Assurance Décennale</span>
+                        </div>
+                        <div className="flex items-center gap-3 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                            <Award className="w-6 h-6 text-emerald-800" />
+                            <span className="font-bold text-emerald-950 uppercase tracking-tighter text-xs">Expertise DFCI</span>
+                        </div>
+                        <div className="flex items-center gap-3 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                            <MapPin className="w-6 h-6 text-emerald-800" />
+                            <span className="font-bold text-emerald-950 uppercase tracking-tighter text-xs">Qualité Pro Var</span>
+                        </div>
+                    </div>
+                </div>
+
+                <PricingEstimator location={cityName} />
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -115,7 +147,11 @@ const Debroussaillage: React.FC = () => {
                             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Prêt pour votre mise en conformité ?</h2>
                             <p className="text-emerald-100/80">Recevez votre devis gratuit sous 24h.</p>
                         </div>
-                        <LeadForm onSuccess={handleFormSuccess} source="Page Débroussaillage Var" />
+                        <LeadForm 
+                            onSuccess={handleFormSuccess} 
+                            source={`Page Débroussaillage ${cityName}`} 
+                            initialCity={cityName}
+                        />
                     </div>
                 </motion.div>
 
@@ -124,7 +160,11 @@ const Debroussaillage: React.FC = () => {
                 */}
             </main>
 
-            <Footer onShowLegal={() => setModalType('legal')} onShowPrivacy={() => setModalType('privacy')} />
+            <Footer 
+                location={cityName}
+                onShowLegal={() => setModalType('legal')} 
+                onShowPrivacy={() => setModalType('privacy')} 
+            />
 
             {!formSubmitted && <StickyCTA />}
 
