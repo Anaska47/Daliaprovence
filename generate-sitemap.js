@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-// Simple script to generate sitemap.xml dynamically from locations array
+// Simple script to generate sitemap index and 5 sub-sitemaps
 const locations = [
   { slug: 'les-adrets-de-l-esterel' }, { slug: 'aiguines' }, { slug: 'ampus' }, { slug: 'les-arcs' },
   { slug: 'artignosc-sur-verdon' }, { slug: 'artigues' }, { slug: 'aups' }, { slug: 'bagnols-en-foret' },
@@ -40,7 +40,7 @@ const locations = [
   { slug: 'verignon' }, { slug: 'vidauban' }, { slug: 'villecroze' }, { slug: 'vins-sur-caramy' }
 ];
 
-const BASE_URL = 'https://daliaprovence.fr';
+const BASE_URL = 'https://daliaprovence.vercel.app';
 const SERVICES = ['debroussaillage', 'elagage', 'terrassement', 'nettoyage-toiture', 'restanques'];
 
 const getCurrentDate = () => {
@@ -48,9 +48,31 @@ const getCurrentDate = () => {
   return d.toISOString().split('T')[0];
 };
 
-let xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+// Generate Index Sitemap
+let sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+
+SERVICES.forEach(service => {
+  sitemapIndex += `  <sitemap>
+    <loc>${BASE_URL}/sitemap-${service}.xml</loc>
+    <lastmod>${getCurrentDate()}</lastmod>
+  </sitemap>
+`;
+});
+
+sitemapIndex += `</sitemapindex>`;
+fs.writeFileSync('public/sitemap.xml', sitemapIndex);
+
+// Generate individual Service Sitemaps
+SERVICES.forEach((service, index) => {
+  let xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- General Pages -->
+`;
+
+  // Include general pages only in the first sitemap
+  if (index === 0) {
+    xmlContent += `  <!-- General Pages -->
   <url>
     <loc>${BASE_URL}/</loc>
     <lastmod>${getCurrentDate()}</lastmod>
@@ -64,8 +86,8 @@ let xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
     <priority>0.8</priority>
   </url>
 `;
+  }
 
-SERVICES.forEach(service => {
   xmlContent += `  <!-- Main Service: ${service} -->
   <url>
     <loc>${BASE_URL}/${service}</loc>
@@ -84,9 +106,10 @@ SERVICES.forEach(service => {
   </url>
 `;
   });
+
+  xmlContent += `</urlset>`;
+  fs.writeFileSync(`public/sitemap-${service}.xml`, xmlContent);
+  console.log(`Sitemap generated: public/sitemap-${service}.xml`);
 });
 
-xmlContent += `</urlset>`;
-
-fs.writeFileSync('public/sitemap.xml', xmlContent);
-console.log('Sitemap successfully generated with ' + (locations.length * SERVICES.length + SERVICES.length + 2) + ' URLs!');
+console.log('Sitemap Index and sub-sitemaps successfully generated!');
