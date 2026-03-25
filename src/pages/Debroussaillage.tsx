@@ -58,7 +58,7 @@ const Debroussaillage: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.fr/debroussaillage/${location.slug}` : 'https://daliaprovence.fr/debroussaillage';
+        const url = location ? `https://daliaprovence.vercel.app/debroussaillage/${location.slug}` : 'https://daliaprovence.vercel.app/debroussaillage';
         canonical.setAttribute('href', url);
     }, [location]);
 

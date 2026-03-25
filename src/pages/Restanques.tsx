@@ -52,7 +52,7 @@ const Restanques: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.fr/restanques/${location.slug}` : 'https://daliaprovence.fr/restanques';
+        const url = location ? `https://daliaprovence.vercel.app/restanques/${location.slug}` : 'https://daliaprovence.vercel.app/restanques';
         canonical.setAttribute('href', url);
     }, [location]);
 

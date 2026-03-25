@@ -52,7 +52,7 @@ const NettoyageToiture: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.fr/nettoyage-toiture/${location.slug}` : 'https://daliaprovence.fr/nettoyage-toiture';
+        const url = location ? `https://daliaprovence.vercel.app/nettoyage-toiture/${location.slug}` : 'https://daliaprovence.vercel.app/nettoyage-toiture';
         canonical.setAttribute('href', url);
     }, [location]);
 

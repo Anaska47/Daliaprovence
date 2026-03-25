@@ -57,7 +57,7 @@ const Elagage: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.fr/elagage/${location.slug}` : 'https://daliaprovence.fr/elagage';
+        const url = location ? `https://daliaprovence.vercel.app/elagage/${location.slug}` : 'https://daliaprovence.vercel.app/elagage';
         canonical.setAttribute('href', url);
     }, [location]);
 

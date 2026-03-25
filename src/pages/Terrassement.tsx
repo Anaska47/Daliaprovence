@@ -52,7 +52,7 @@ const Terrassement: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.fr/terrassement/${location.slug}` : 'https://daliaprovence.fr/terrassement';
+        const url = location ? `https://daliaprovence.vercel.app/terrassement/${location.slug}` : 'https://daliaprovence.vercel.app/terrassement';
         canonical.setAttribute('href', url);
     }, [location]);
 
