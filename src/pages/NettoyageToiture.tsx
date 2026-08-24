@@ -8,6 +8,7 @@ import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
+import SeoSchema from '../components/SeoSchema';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
@@ -16,6 +17,7 @@ import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import { getLocationBySlug } from '../data/locations';
+import { faqNettoyageToiture } from '../data/faqContent';
 import { Shield, Sparkles, MapPin, Droplet } from 'lucide-react';
 
 const NettoyageToiture: React.FC = () => {
@@ -32,6 +34,11 @@ const NettoyageToiture: React.FC = () => {
     const location = citySlug ? getLocationBySlug(citySlug) : null;
     const cityName = location ? location.name : 'Brignoles';
 
+    const canonicalUrl = location ? `https://daliaprovence.vercel.app/nettoyage-toiture/${location.slug}` : 'https://daliaprovence.vercel.app/nettoyage-toiture';
+    const pageDescription = location
+        ? `Redonnez l'éclat du neuf à votre toiture ou façade à ${location.name}. Démoussage, traitement hydrofuge et nettoyage professionnel. Devis gratuit.`
+        : 'Spécialistes du nettoyage, démoussage et traitement hydrofuge de toitures et façades dans le Var. Protégez votre maison des infiltrations et redonnez-lui son éclat.';
+
     useEffect(() => {
         const pageTitle = location 
             ? `Démoussage & Nettoyage de Toiture à ${location.name} (${location.zipCode})` 
@@ -41,9 +48,7 @@ const NettoyageToiture: React.FC = () => {
         
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-            metaDescription.setAttribute('content', location 
-                ? `Redonnez l'éclat du neuf à votre toiture ou façade à ${location.name}. Démoussage, traitement hydrofuge et nettoyage professionnel. Devis gratuit.`
-                : 'Spécialistes du nettoyage, démoussage et traitement hydrofuge de toitures et façades dans le Var. Protégez votre maison des infiltrations et redonnez-lui son éclat.');
+            metaDescription.setAttribute('content', pageDescription);
         }
 
         let canonical = document.querySelector('link[rel="canonical"]');
@@ -52,12 +57,18 @@ const NettoyageToiture: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.vercel.app/nettoyage-toiture/${location.slug}` : 'https://daliaprovence.vercel.app/nettoyage-toiture';
-        canonical.setAttribute('href', url);
-    }, [location]);
+        canonical.setAttribute('href', canonicalUrl);
+    }, [location, canonicalUrl, pageDescription]);
 
     return (
         <div className="min-h-screen flex flex-col selection:bg-sky-200 relative pt-10 sm:pt-0">
+            <SeoSchema
+                serviceName="Nettoyage et démoussage de toiture"
+                serviceDescription={pageDescription}
+                cityName={cityName}
+                canonicalUrl={canonicalUrl}
+                faqs={faqNettoyageToiture}
+            />
             {/* Custom Banner for Cleaning */}
             <div className="fixed top-0 left-0 right-0 z-[60] bg-sky-950 text-white overflow-hidden relative border-b border-white/5">
                 <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
@@ -130,7 +141,7 @@ const NettoyageToiture: React.FC = () => {
 
                 <Gallery />
 
-                <FAQ />
+                <FAQ faqs={faqNettoyageToiture} titleHighlight="le nettoyage de toiture" subtitle="Démoussage & hydrofuge Var (83)" />
 
                 <motion.div
                     id="devis-form"

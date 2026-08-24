@@ -8,6 +8,7 @@ import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
+import SeoSchema from '../components/SeoSchema';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
@@ -18,6 +19,7 @@ import UrgencyBanner from '../components/UrgencyBanner';
 import MaintenanceSubscription from '../components/MaintenanceSubscription';
 import { motion } from 'framer-motion';
 import { getLocationBySlug } from '../data/locations';
+import { faqElagage } from '../data/faqContent';
 import { Shield, Award, MapPin, CheckCircle, X } from 'lucide-react';
 
 const Elagage: React.FC = () => {
@@ -34,6 +36,11 @@ const Elagage: React.FC = () => {
     const location = citySlug ? getLocationBySlug(citySlug) : null;
     const cityName = location ? location.name : 'Brignoles';
 
+    const canonicalUrl = location ? `https://daliaprovence.vercel.app/elagage/${location.slug}` : 'https://daliaprovence.vercel.app/elagage';
+    const pageDescription = location
+        ? `Services d'élagage et abattage d'arbres à ${location.name}. Intervention en toute sécurité par des arboristes experts. Devis gratuit sous 24h.`
+        : 'Experts en élagage et abattage d\'arbres délicats dans le Var. Taille douce, démontage d\'arbres dangereux et évacuation. Devis rapide à Brignoles et 83.';
+
     useEffect(() => {
         // Dynamic SEO Update for Elagage
         const pageTitle = location 
@@ -45,9 +52,7 @@ const Elagage: React.FC = () => {
         // Update meta description
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-            metaDescription.setAttribute('content', location 
-                ? `Services d'élagage et abattage d'arbres à ${location.name}. Intervention en toute sécurité par des arboristes experts. Devis gratuit sous 24h.`
-                : 'Experts en élagage et abattage d\'arbres délicats dans le Var. Taille douce, démontage d\'arbres dangereux et évacuation. Devis rapide à Brignoles et 83.');
+            metaDescription.setAttribute('content', pageDescription);
         }
 
         // Canonical Tag
@@ -57,12 +62,18 @@ const Elagage: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.vercel.app/elagage/${location.slug}` : 'https://daliaprovence.vercel.app/elagage';
-        canonical.setAttribute('href', url);
-    }, [location]);
+        canonical.setAttribute('href', canonicalUrl);
+    }, [location, canonicalUrl, pageDescription]);
 
     return (
         <div className="min-h-screen flex flex-col selection:bg-amber-100 relative pt-10 sm:pt-0">
+            <SeoSchema
+                serviceName="Élagage et abattage d'arbres"
+                serviceDescription={pageDescription}
+                cityName={cityName}
+                canonicalUrl={canonicalUrl}
+                faqs={faqElagage}
+            />
             <div className="fixed top-0 left-0 right-0 z-[60]">
                 <UrgencyBanner />
             </div>
@@ -125,7 +136,7 @@ const Elagage: React.FC = () => {
 
                 <Gallery />
 
-                <FAQ />
+                <FAQ faqs={faqElagage} titleHighlight="l'élagage professionnel" subtitle="Arboristes certifiés Var (83)" />
 
                 <motion.div
                     id="devis-form"

@@ -8,6 +8,7 @@ import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
+import SeoSchema from '../components/SeoSchema';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
@@ -16,6 +17,7 @@ import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import { getLocationBySlug } from '../data/locations';
+import { faqRestanques } from '../data/faqContent';
 import { Shield, MapPin, HardHat, Pickaxe } from 'lucide-react';
 
 const Restanques: React.FC = () => {
@@ -32,6 +34,11 @@ const Restanques: React.FC = () => {
     const location = citySlug ? getLocationBySlug(citySlug) : null;
     const cityName = location ? location.name : 'Brignoles';
 
+    const canonicalUrl = location ? `https://daliaprovence.vercel.app/restanques/${location.slug}` : 'https://daliaprovence.vercel.app/restanques';
+    const pageDescription = location
+        ? `Artisan spécialiste de la création et réparation de restanques à ${location.name}. Murets en pierre naturelle, aménagement paysager traditionnel provençal.`
+        : 'Maîtrise de la pierre sèche et création de restanques dans le Var. Aménagez les pentes de votre terrain avec l\'authenticité de la Provence.';
+
     useEffect(() => {
         const pageTitle = location 
             ? `Création de Restanques & Murs en Pierre à ${location.name} (${location.zipCode})` 
@@ -41,9 +48,7 @@ const Restanques: React.FC = () => {
         
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-            metaDescription.setAttribute('content', location 
-                ? `Artisan spécialiste de la création et réparation de restanques à ${location.name}. Murets en pierre naturelle, aménagement paysager traditionnel provençal.`
-                : 'Maîtrise de la pierre sèche et création de restanques dans le Var. Aménagez les pentes de votre terrain avec l\'authenticité de la Provence.');
+            metaDescription.setAttribute('content', pageDescription);
         }
 
         let canonical = document.querySelector('link[rel="canonical"]');
@@ -52,12 +57,18 @@ const Restanques: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.vercel.app/restanques/${location.slug}` : 'https://daliaprovence.vercel.app/restanques';
-        canonical.setAttribute('href', url);
-    }, [location]);
+        canonical.setAttribute('href', canonicalUrl);
+    }, [location, canonicalUrl, pageDescription]);
 
     return (
         <div className="min-h-screen flex flex-col selection:bg-amber-200 relative pt-10 sm:pt-0">
+            <SeoSchema
+                serviceName="Création et restauration de restanques"
+                serviceDescription={pageDescription}
+                cityName={cityName}
+                canonicalUrl={canonicalUrl}
+                faqs={faqRestanques}
+            />
             {/* Custom Banner for Restanques */}
             <div className="fixed top-0 left-0 right-0 z-[60] bg-yellow-950 text-white overflow-hidden relative border-b border-white/5">
                 <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -130,7 +141,7 @@ const Restanques: React.FC = () => {
 
                 <Gallery />
 
-                <FAQ />
+                <FAQ faqs={faqRestanques} titleHighlight="les restanques en pierre sèche" subtitle="Savoir-faire provençal Var (83)" />
 
                 <motion.div
                     id="devis-form"

@@ -8,6 +8,7 @@ import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
+import SeoSchema from '../components/SeoSchema';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
@@ -18,6 +19,7 @@ import WhatsAppButton from '../components/WhatsAppButton';
 import UrgencyBanner from '../components/UrgencyBanner';
 import { motion } from 'framer-motion';
 import { getLocationBySlug } from '../data/locations';
+import { faqDebroussaillage } from '../data/faqContent';
 import { Shield, Award, MapPin } from 'lucide-react';
 
 const Debroussaillage: React.FC = () => {
@@ -35,6 +37,11 @@ const Debroussaillage: React.FC = () => {
     const location = citySlug ? getLocationBySlug(citySlug) : null;
     const cityName = location ? location.name : 'Brignoles';
 
+    const canonicalUrl = location ? `https://daliaprovence.vercel.app/debroussaillage/${location.slug}` : 'https://daliaprovence.vercel.app/debroussaillage';
+    const pageDescription = location
+        ? `Besoin d'un débroussaillage à ${location.name} ? Mise en conformité OLD / DFCI rapide. Devis gratuit sous 24h par des experts locaux.`
+        : 'Service de débroussaillage professionnel dans le Var. Mise en conformité incendie légale (OLD), intervention rapide à Brignoles et alentours.';
+
     useEffect(() => {
         // Dynamic SEO Update
         const pageTitle = location 
@@ -46,9 +53,7 @@ const Debroussaillage: React.FC = () => {
         // Update meta description
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-            metaDescription.setAttribute('content', location 
-                ? `Besoin d'un débroussaillage à ${location.name} ? Mise en conformité OLD / DFCI rapide. Devis gratuit sous 24h par des experts locaux.`
-                : 'Service de débroussaillage professionnel dans le Var. Mise en conformité incendie légale (OLD), intervention rapide à Brignoles et alentours.');
+            metaDescription.setAttribute('content', pageDescription);
         }
 
         // Canonical Tag
@@ -58,12 +63,18 @@ const Debroussaillage: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.vercel.app/debroussaillage/${location.slug}` : 'https://daliaprovence.vercel.app/debroussaillage';
-        canonical.setAttribute('href', url);
-    }, [location]);
+        canonical.setAttribute('href', canonicalUrl);
+    }, [location, canonicalUrl, pageDescription]);
 
     return (
         <div className="min-h-screen flex flex-col selection:bg-emerald-100 relative pt-10 sm:pt-0">
+            <SeoSchema
+                serviceName="Débroussaillage"
+                serviceDescription={pageDescription}
+                cityName={cityName}
+                canonicalUrl={canonicalUrl}
+                faqs={faqDebroussaillage}
+            />
             <div className="fixed top-0 left-0 right-0 z-[60]">
                 <UrgencyBanner />
             </div>
@@ -139,7 +150,7 @@ const Debroussaillage: React.FC = () => {
 
                 <Gallery />
 
-                <FAQ />
+                <FAQ faqs={faqDebroussaillage} titleHighlight="le débroussaillage légal" subtitle="Conformité OLD / DFCI Var (83)" />
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

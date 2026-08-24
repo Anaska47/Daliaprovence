@@ -8,6 +8,7 @@ import Gallery from '../components/Gallery';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
+import SeoSchema from '../components/SeoSchema';
 import StickyCTA from '../components/StickyCTA';
 import Footer from '../components/Footer';
 import LegalModal from '../components/LegalModal';
@@ -16,6 +17,7 @@ import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import { getLocationBySlug } from '../data/locations';
+import { faqTerrassement } from '../data/faqContent';
 import { Shield, Hammer, MapPin, Truck } from 'lucide-react';
 
 const Terrassement: React.FC = () => {
@@ -32,6 +34,11 @@ const Terrassement: React.FC = () => {
     const location = citySlug ? getLocationBySlug(citySlug) : null;
     const cityName = location ? location.name : 'Brignoles';
 
+    const canonicalUrl = location ? `https://daliaprovence.vercel.app/terrassement/${location.slug}` : 'https://daliaprovence.vercel.app/terrassement';
+    const pageDescription = location
+        ? `Travaux de terrassement, nivellement et aménagement de terrain à ${location.name}. Équipe équipée et expérimentée. Devis gratuit rapide.`
+        : 'Spécialistes du terrassement et de la préparation de terrain dans le Var. Fondations, piscines, nivellement. Consultez-nous pour un devis gratuit au meilleur prix.';
+
     useEffect(() => {
         const pageTitle = location 
             ? `Terrassement à ${location.name} (${location.zipCode}) - Devis Gratuit` 
@@ -41,9 +48,7 @@ const Terrassement: React.FC = () => {
         
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-            metaDescription.setAttribute('content', location 
-                ? `Travaux de terrassement, nivellement et aménagement de terrain à ${location.name}. Équipe équipée et expérimentée. Devis gratuit rapide.`
-                : 'Spécialistes du terrassement et de la préparation de terrain dans le Var. Fondations, piscines, nivellement. Consultez-nous pour un devis gratuit au meilleur prix.');
+            metaDescription.setAttribute('content', pageDescription);
         }
 
         let canonical = document.querySelector('link[rel="canonical"]');
@@ -52,12 +57,18 @@ const Terrassement: React.FC = () => {
             canonical.setAttribute('rel', 'canonical');
             document.head.appendChild(canonical);
         }
-        const url = location ? `https://daliaprovence.vercel.app/terrassement/${location.slug}` : 'https://daliaprovence.vercel.app/terrassement';
-        canonical.setAttribute('href', url);
-    }, [location]);
+        canonical.setAttribute('href', canonicalUrl);
+    }, [location, canonicalUrl, pageDescription]);
 
     return (
         <div className="min-h-screen flex flex-col selection:bg-stone-200 relative pt-10 sm:pt-0">
+            <SeoSchema
+                serviceName="Terrassement"
+                serviceDescription={pageDescription}
+                cityName={cityName}
+                canonicalUrl={canonicalUrl}
+                faqs={faqTerrassement}
+            />
             {/* Custom Banner for Terrassement */}
             <div className="fixed top-0 left-0 right-0 z-[60] bg-orange-950 text-white overflow-hidden relative border-b border-white/5">
                 <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
@@ -131,7 +142,7 @@ const Terrassement: React.FC = () => {
 
                 <Gallery />
 
-                <FAQ />
+                <FAQ faqs={faqTerrassement} titleHighlight="le terrassement" subtitle="Préparation de terrain & fondations Var (83)" />
 
                 <motion.div
                     id="devis-form"
