@@ -1,0 +1,14 @@
+{
+  "name": "dalia-seo-report-scripts",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scripts d'automatisation SEO pour daliaprovence-landing-page (hors build de l'appli, dependances isolees pour ne pas alourdir le build Vercel).",
+  "scripts": {
+    "seo-report": "node seo-report.mjs"
+  },
+  "dependencies": {
+    "@google-analytics/data": "^7.0.0",
+    "googleapis": "^176.0.0"
+  }
+}
