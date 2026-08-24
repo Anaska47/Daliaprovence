@@ -63,6 +63,23 @@ const Elagage: React.FC = () => {
             document.head.appendChild(canonical);
         }
         canonical.setAttribute('href', canonicalUrl);
+
+        // Open Graph / reseaux sociaux (partage de la page)
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) {
+            ogTitle.setAttribute('content', pageTitle);
+        }
+        const ogDescription = document.querySelector('meta[property="og:description"]');
+        if (ogDescription) {
+            ogDescription.setAttribute('content', pageDescription);
+        }
+        let ogUrl = document.querySelector('meta[property="og:url"]');
+        if (!ogUrl) {
+            ogUrl = document.createElement('meta');
+            ogUrl.setAttribute('property', 'og:url');
+            document.head.appendChild(ogUrl);
+        }
+        ogUrl.setAttribute('content', canonicalUrl);
     }, [location, canonicalUrl, pageDescription]);
 
     return (
@@ -151,8 +168,8 @@ const Elagage: React.FC = () => {
                             onSuccess={handleFormSuccess} 
                             source={`Page Élagage ${cityName}`} 
                             initialCity={cityName}
-                        />
-                    </div>
+                    />
+                </div>
                 </motion.div>
             </main>
 
