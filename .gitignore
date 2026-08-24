@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Fichiers en attente de suppression manuelle (nettoyage du 2026-08-24)
+_to_delete/
