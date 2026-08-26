@@ -16,6 +16,7 @@ import FAQ from '../../components/FAQ';
 import LeadForm from '../../components/LeadForm';
 import WhatsAppButton from '../../components/WhatsAppButton';
 import LegalModal from '../../components/LegalModal';
+import SeoSchema from '../../components/SeoSchema';
 import { faqRestanques } from '../../data/faqContent';
 
 const PAGE_TITLE = 'Restanques et Murs en Pierre Sèche en Provence : Guide Complet - Dalia Provence';
@@ -54,6 +55,13 @@ const GuideRestanquesPierreSeche: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
+      <SeoSchema
+        serviceName="Création et restauration de restanques"
+        serviceDescription={PAGE_DESCRIPTION}
+        cityName="Brignoles"
+        canonicalUrl={CANONICAL_URL}
+        faqs={faqRestanques}
+      />
       <Navbar location="Brignoles" />
 
       <main className="flex-grow pt-28 pb-24">

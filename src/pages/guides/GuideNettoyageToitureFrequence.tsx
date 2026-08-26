@@ -16,6 +16,7 @@ import FAQ from '../../components/FAQ';
 import LeadForm from '../../components/LeadForm';
 import WhatsAppButton from '../../components/WhatsAppButton';
 import LegalModal from '../../components/LegalModal';
+import SeoSchema from '../../components/SeoSchema';
 import { faqNettoyageToiture } from '../../data/faqContent';
 
 const PAGE_TITLE = 'Nettoyage de Toiture en Provence : Fréquence et Entretien - Dalia Provence';
@@ -54,6 +55,13 @@ const GuideNettoyageToitureFrequence: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
+      <SeoSchema
+        serviceName="Nettoyage et démoussage de toiture"
+        serviceDescription={PAGE_DESCRIPTION}
+        cityName="Brignoles"
+        canonicalUrl={CANONICAL_URL}
+        faqs={faqNettoyageToiture}
+      />
       <Navbar location="Brignoles" />
 
       <main className="flex-grow pt-28 pb-24">

@@ -17,6 +17,7 @@ import FAQ from '../../components/FAQ';
 import LeadForm from '../../components/LeadForm';
 import WhatsAppButton from '../../components/WhatsAppButton';
 import LegalModal from '../../components/LegalModal';
+import SeoSchema from '../../components/SeoSchema';
 import { faqElagage } from '../../data/faqContent';
 
 const PAGE_TITLE = "Élagage d'Arbres dans le Var : Réglementation et Bonne Période - Dalia Provence";
@@ -55,6 +56,13 @@ const GuideElagageReglementation: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
+      <SeoSchema
+        serviceName="Élagage et abattage d'arbres"
+        serviceDescription={PAGE_DESCRIPTION}
+        cityName="Brignoles"
+        canonicalUrl={CANONICAL_URL}
+        faqs={faqElagage}
+      />
       <Navbar location="Brignoles" />
 
       <main className="flex-grow pt-28 pb-24">

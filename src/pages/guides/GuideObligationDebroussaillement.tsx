@@ -14,6 +14,7 @@ import {
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import FAQ from '../../components/FAQ';
+import SeoSchema from '../../components/SeoSchema';
 import LeadForm from '../../components/LeadForm';
 import WhatsAppButton from '../../components/WhatsAppButton';
 import LegalModal from '../../components/LegalModal';
@@ -59,6 +60,13 @@ const GuideObligationDebroussaillement: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
+      <SeoSchema
+        serviceName="Débroussaillage"
+        serviceDescription={PAGE_DESCRIPTION}
+        cityName="Brignoles"
+        canonicalUrl={CANONICAL_URL}
+        faqs={faqDebroussaillage}
+      />
       <Navbar location="Brignoles" />
 
       <main className="flex-grow pt-28 pb-24">
