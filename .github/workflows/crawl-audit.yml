@@ -1,0 +1,60 @@
+name: Audit de crawl (SEO technique)
+
+# Verifie apres chaque push que les pages generees (dist/) ont un
+# title/description/canonical/OG coherents et sans doublon, et que les
+# sitemaps correspondent bien aux pages reellement generees par
+# prerender.mjs. Gratuit, aucun secret necessaire : scripts/crawl-audit.mjs
+# ne fait aucun appel reseau, il relit juste dist/ apres le build.
+#
+# Contrairement au rapport SEO hebdomadaire (qui peut echouer pour des
+# raisons externes -- identifiants pas encore configures, quota API...), un
+# echec ICI signale un vrai probleme de code (ex: une page qui herite les
+# meta d'une autre, un sitemap desynchronise -- exactement la classe de bug
+# qui touchait /merci et /partenaires avant leur correction). Le job est donc
+# volontairement rouge dans ce cas, pas juste informatif.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  crawl-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dependances
+        run: npm ci
+
+      - name: Build + audit
+        id: audit
+        continue-on-error: true
+        run: npm run audit:crawl
+
+      - name: Committer le rapport (meme en cas d'echec)
+        run: |
+          git config user.name "dalia-seo-bot"
+          git config user.email "actions@github.com"
+          git add reports/crawl-audit/
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau a committer."
+          else
+            git commit -m "Audit de crawl automatique $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Faire echouer le job si un probleme bloquant a ete trouve
+        if: steps.audit.outcome == 'failure'
+        run: |
+          echo "L'audit a trouve au moins un probleme bloquant -- voir reports/crawl-audit/latest.md"
+          exit 1
