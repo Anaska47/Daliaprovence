@@ -88,6 +88,13 @@ async function main() {
   console.log(`IndexNow a repondu : ${res.status} ${res.statusText} -- ${detail}`);
 
   if (res.status !== 200 && res.status !== 202) {
+    // Le code seul ne suffit pas toujours a comprendre le vrai probleme (ex:
+    // un proxy reseau intermediaire peut renvoyer un 403 qui n'a rien a voir
+    // avec IndexNow lui-meme). On journalise le corps + les en-tetes pour un
+    // vrai diagnostic plutot que de se fier uniquement au code HTTP.
+    const bodyText = await res.text().catch(() => '(impossible de lire le corps)');
+    console.log('Corps de la reponse :', bodyText || '(vide)');
+    console.log('En-tetes :', JSON.stringify(Object.fromEntries(res.headers.entries())));
     process.exitCode = 1;
   }
 }
