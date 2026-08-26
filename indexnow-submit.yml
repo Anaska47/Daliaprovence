@@ -1,0 +1,32 @@
+name: Notifier IndexNow (Bing, Yandex...)
+
+# Prevoient Bing/Yandex/Naver/Seznam.cz/Yep qu'une page a change des qu'on
+# pousse sur main, au lieu d'attendre qu'ils redecouvrent le site tout seuls.
+# Google ne fait pas partie d'IndexNow (voir Search Console pour lui) -- ceci
+# est un complement, pas un remplacement. Gratuit, aucun secret necessaire :
+# la cle IndexNow est publique par design (voir public/*.txt et
+# docs/SETUP-BING-INDEXNOW.md).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/data/locations.json'
+      - 'src/pages/**'
+      - 'scripts/indexnow-submit.mjs'
+  workflow_dispatch: {}
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Soumettre les URLs a IndexNow
+        run: node scripts/indexnow-submit.mjs

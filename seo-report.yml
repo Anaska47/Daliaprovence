@@ -1,0 +1,58 @@
+name: Rapport SEO hebdomadaire
+
+# Remplace Supermetrics (essai gratuit expire) par un appel direct et gratuit
+# aux API Google (Search Console + Analytics Data). Voir docs/SETUP-GOOGLE-API.md
+# pour la configuration du secret GSC_GA4_SERVICE_ACCOUNT_KEY.
+#
+# Tourne chaque lundi matin, avant la tache planifiee Claude qui lit
+# reports/seo/latest.md pour en faire un resume actionnable en francais.
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  seo-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dependances du script
+        working-directory: scripts
+        run: npm install
+
+      - name: Generer le rapport SEO
+        id: generate
+        working-directory: scripts
+        continue-on-error: true
+        env:
+          GSC_GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GSC_GA4_SERVICE_ACCOUNT_KEY }}
+        run: node seo-report.mjs
+
+      - name: Committer le rapport (meme partiel)
+        run: |
+          git config user.name "dalia-seo-bot"
+          git config user.email "actions@github.com"
+          git add reports/seo/
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau a committer."
+          else
+            git commit -m "Rapport SEO automatique $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Signaler un echec partiel
+        if: steps.generate.outcome == 'failure'
+        run: |
+          echo "Le rapport a bien ete commite, mais au moins une section a echoue (identifiants pas encore configures ? cf. reports/seo/latest.md et docs/SETUP-GOOGLE-API.md)."
+          exit 1
