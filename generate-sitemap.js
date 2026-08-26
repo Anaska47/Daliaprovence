@@ -17,6 +17,10 @@ const SERVICES = ['debroussaillage', 'elagage', 'terrassement', 'nettoyage-toitu
 // decoupage par service deja en place ci-dessous.
 const GUIDES = {
   debroussaillage: '/guides/obligation-debroussaillement-var',
+  elagage: '/guides/elagage-reglementation-var',
+  terrassement: '/guides/terrassement-autorisation-var',
+  'nettoyage-toiture': '/guides/nettoyage-toiture-frequence-var',
+  restanques: '/guides/restanques-pierre-seche-var',
 };
 
 const getCurrentDate = () => {

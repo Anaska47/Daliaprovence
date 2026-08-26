@@ -50,6 +50,34 @@ const Footer: React.FC<FooterProps> = ({ onShowLegal, onShowPrivacy, location = 
             >
               Obligation de débroussaillement (OLD) dans le Var
             </Link>
+            <Link
+              to="/guides/elagage-reglementation-var"
+              className="hover:text-amber-400 transition-colors"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Réglementation de l'élagage dans le Var
+            </Link>
+            <Link
+              to="/guides/terrassement-autorisation-var"
+              className="hover:text-amber-400 transition-colors"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Autorisations pour le terrassement dans le Var
+            </Link>
+            <Link
+              to="/guides/nettoyage-toiture-frequence-var"
+              className="hover:text-amber-400 transition-colors"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Fréquence du nettoyage de toiture en Provence
+            </Link>
+            <Link
+              to="/guides/restanques-pierre-seche-var"
+              className="hover:text-amber-400 transition-colors"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Restanques et pierre sèche en Provence
+            </Link>
           </div>
         </div>
 

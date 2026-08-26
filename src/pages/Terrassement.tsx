@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import LeadForm from '../components/LeadForm';
 import TrustSignals from '../components/TrustSignals';
@@ -168,6 +168,15 @@ const Terrassement: React.FC = () => {
                 <Gallery />
 
                 <FAQ faqs={faqTerrassement} titleHighlight="le terrassement" subtitle="Préparation de terrain & fondations Var (83)" />
+
+                <div className="text-center pb-16 px-6 -mt-8">
+                    <Link
+                        to="/guides/terrassement-autorisation-var"
+                        className="inline-flex items-center gap-2 text-orange-700 font-bold hover:text-orange-900 transition-colors underline decoration-orange-200 underline-offset-4"
+                    >
+                        Lire le guide complet sur les autorisations de terrassement dans le Var →
+                    </Link>
+                </div>
 
                 <motion.div
                     id="devis-form"

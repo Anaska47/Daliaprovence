@@ -252,6 +252,22 @@ const GUIDE_CONFIG = {
     title: 'Obligation de Débroussaillement (OLD) dans le Var : Guide Complet - Dalia Provence',
     description: "Rayon 50-100m, amende jusqu'à 30€/m², période légale, crédit d'impôt : tout savoir sur l'obligation de débroussaillement (OLD) dans le Var. Devis gratuit Dalia Provence.",
   },
+  '/guides/elagage-reglementation-var': {
+    title: "Élagage d'Arbres dans le Var : Réglementation et Bonne Période - Dalia Provence",
+    description: "Autorisation pour abattre ou tailler, période légale (nidification), arbre dangereux, déchets verts, crédit d'impôt : tout savoir sur l'élagage dans le Var. Devis gratuit Dalia Provence.",
+  },
+  '/guides/terrassement-autorisation-var': {
+    title: 'Terrassement dans le Var : Quelles Autorisations pour vos Travaux ? - Dalia Provence',
+    description: "Déclaration préalable, permis d'aménager, garantie décennale, évacuation des terres : tout savoir avant des travaux de terrassement dans le Var. Devis gratuit Dalia Provence.",
+  },
+  '/guides/nettoyage-toiture-frequence-var': {
+    title: 'Nettoyage de Toiture en Provence : Fréquence et Entretien - Dalia Provence',
+    description: "Tous les combien nettoyer sa toiture ? Traitement hydrofuge, produits utilisés, autorisation en copropriété : le guide complet du nettoyage de toiture en Provence. Devis gratuit.",
+  },
+  '/guides/restanques-pierre-seche-var': {
+    title: 'Restanques et Murs en Pierre Sèche en Provence : Guide Complet - Dalia Provence',
+    description: "Qu'est-ce qu'une restanque, faut-il une autorisation, technique de pierre sèche reconnue par l'UNESCO, réparation : tout savoir sur les restanques en Provence. Devis gratuit.",
+  },
 };
 
 function renderStaticPageHtml(baseHtml, route, { title, description, robots }) {

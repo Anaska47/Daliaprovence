@@ -8,6 +8,10 @@ import Terrassement from './pages/Terrassement';
 import NettoyageToiture from './pages/NettoyageToiture';
 import Restanques from './pages/Restanques';
 import GuideObligationDebroussaillement from './pages/guides/GuideObligationDebroussaillement';
+import GuideElagageReglementation from './pages/guides/GuideElagageReglementation';
+import GuideTerrassementAutorisation from './pages/guides/GuideTerrassementAutorisation';
+import GuideNettoyageToitureFrequence from './pages/guides/GuideNettoyageToitureFrequence';
+import GuideRestanquesPierreSeche from './pages/guides/GuideRestanquesPierreSeche';
 
 const App: React.FC = () => {
     return (
@@ -27,6 +31,10 @@ const App: React.FC = () => {
                 <Route path="/merci" element={<Merci />} />
                 <Route path="/partenaires" element={<Partners />} />
                 <Route path="/guides/obligation-debroussaillement-var" element={<GuideObligationDebroussaillement />} />
+                <Route path="/guides/elagage-reglementation-var" element={<GuideElagageReglementation />} />
+                <Route path="/guides/terrassement-autorisation-var" element={<GuideTerrassementAutorisation />} />
+                <Route path="/guides/nettoyage-toiture-frequence-var" element={<GuideNettoyageToitureFrequence />} />
+                <Route path="/guides/restanques-pierre-seche-var" element={<GuideRestanquesPierreSeche />} />
                 {/* Placeholder for future services */}
                 {/* <Route path="/elagage" element={<Elagage />} /> */}
                 <Route path="*" element={<Navigate to="/" replace />} />
