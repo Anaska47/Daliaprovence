@@ -154,6 +154,7 @@ function buildRoutes() {
     }
   }
   routes.push('/merci', '/partenaires');
+  routes.push(...Object.keys(GUIDE_CONFIG));
   return routes;
 }
 
@@ -241,6 +242,18 @@ const STATIC_PAGE_CONFIG = {
   },
 };
 
+// Guides/articles de fond (contenu editorial, pas de variante par ville).
+// Meme mecanique que STATIC_PAGE_CONFIG (garde separee car conceptuellement
+// distincte : un guide est destine a grandir -- un par service a terme, voir
+// docs/SETUP-*.md) ; a synchroniser a la main avec le useEffect du composant
+// React correspondant et avec l'entree GUIDES de generate-sitemap.js.
+const GUIDE_CONFIG = {
+  '/guides/obligation-debroussaillement-var': {
+    title: 'Obligation de Débroussaillement (OLD) dans le Var : Guide Complet - Dalia Provence',
+    description: "Rayon 50-100m, amende jusqu'à 30€/m², période légale, crédit d'impôt : tout savoir sur l'obligation de débroussaillement (OLD) dans le Var. Devis gratuit Dalia Provence.",
+  },
+};
+
 function renderStaticPageHtml(baseHtml, route, { title, description, robots }) {
   const canonicalUrl = `${SITE_BASE_URL}${route}`;
 
@@ -259,7 +272,7 @@ function renderStaticPageHtml(baseHtml, route, { title, description, robots }) {
 }
 
 function renderRouteHtml(baseHtml, route) {
-  const staticConfig = STATIC_PAGE_CONFIG[route];
+  const staticConfig = STATIC_PAGE_CONFIG[route] || GUIDE_CONFIG[route];
   if (staticConfig) return renderStaticPageHtml(baseHtml, route, staticConfig);
 
   const parts = route.split('/').filter(Boolean); // e.g. ['debroussaillage', 'aix-en-provence']

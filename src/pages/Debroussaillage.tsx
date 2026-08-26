@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import LeadForm from '../components/LeadForm';
 import TrustSignals from '../components/TrustSignals';
@@ -168,6 +168,15 @@ const Debroussaillage: React.FC = () => {
                 <Gallery />
 
                 <FAQ faqs={faqDebroussaillage} titleHighlight="le débroussaillage légal" subtitle="Conformité OLD / DFCI Var (83)" />
+
+                <div className="text-center pb-16 px-6 -mt-8">
+                    <Link
+                        to="/guides/obligation-debroussaillement-var"
+                        className="inline-flex items-center gap-2 text-emerald-700 font-bold hover:text-emerald-900 transition-colors underline decoration-emerald-200 underline-offset-4"
+                    >
+                        Lire le guide complet sur l'obligation de débroussaillement (OLD) dans le Var →
+                    </Link>
+                </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

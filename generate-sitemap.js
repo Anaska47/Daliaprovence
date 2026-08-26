@@ -11,6 +11,14 @@ const locations = locationsData.map(({ slug }) => ({ slug }));
 const BASE_URL = 'https://daliaprovence.vercel.app';
 const SERVICES = ['debroussaillage', 'elagage', 'terrassement', 'nettoyage-toiture', 'restanques'];
 
+// Guides/articles de fond : un par service a terme (voir GUIDE_CONFIG dans
+// prerender.mjs, a garder synchronise). Chaque guide est ajoute au sitemap
+// de SON service, pas dans un fichier a part, pour rester coherent avec le
+// decoupage par service deja en place ci-dessous.
+const GUIDES = {
+  debroussaillage: '/guides/obligation-debroussaillement-var',
+};
+
 const getCurrentDate = () => {
   const d = new Date();
   return d.toISOString().split('T')[0];
@@ -64,6 +72,17 @@ SERVICES.forEach((service, index) => {
     <priority>0.9</priority>
   </url>
 `;
+
+  if (GUIDES[service]) {
+    xmlContent += `  <!-- Guide -->
+  <url>
+    <loc>${BASE_URL}${GUIDES[service]}</loc>
+    <lastmod>${getCurrentDate()}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+`;
+  }
 
   locations.forEach(loc => {
     xmlContent += `  <url>

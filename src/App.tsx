@@ -7,6 +7,7 @@ import Elagage from './pages/Elagage';
 import Terrassement from './pages/Terrassement';
 import NettoyageToiture from './pages/NettoyageToiture';
 import Restanques from './pages/Restanques';
+import GuideObligationDebroussaillement from './pages/guides/GuideObligationDebroussaillement';
 
 const App: React.FC = () => {
     return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
                 <Route path="/restanques/:citySlug" element={<Restanques />} />
                 <Route path="/merci" element={<Merci />} />
                 <Route path="/partenaires" element={<Partners />} />
+                <Route path="/guides/obligation-debroussaillement-var" element={<GuideObligationDebroussaillement />} />
                 {/* Placeholder for future services */}
                 {/* <Route path="/elagage" element={<Elagage />} /> */}
                 <Route path="*" element={<Navigate to="/" replace />} />

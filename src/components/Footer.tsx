@@ -40,6 +40,19 @@ const Footer: React.FC<FooterProps> = ({ onShowLegal, onShowPrivacy, location = 
           </div>
         </div>
 
+        <div className="pt-6 border-t border-white/5">
+          <p className="text-[10px] uppercase tracking-widest font-bold mb-3 opacity-30">Guides pratiques</p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs font-medium opacity-60">
+            <Link
+              to="/guides/obligation-debroussaillement-var"
+              className="hover:text-amber-400 transition-colors"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Obligation de débroussaillement (OLD) dans le Var
+            </Link>
+          </div>
+        </div>
+
         <div className="flex justify-center gap-6 text-xs uppercase tracking-widest font-semibold opacity-40 pt-4">
           <button onClick={onShowLegal} className="hover:text-amber-400 transition-colors">Mentions légales</button>
           <button onClick={onShowPrivacy} className="hover:text-amber-400 transition-colors">Confidentialité</button>
