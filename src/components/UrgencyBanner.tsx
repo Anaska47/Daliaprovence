@@ -20,7 +20,12 @@ const UrgencyBanner: React.FC = () => {
           </div>
         </div>
 
-        <button 
+        {/* pointer-events-none (herite du conteneur fixe parent) : la
+            bannière ne doit pas passer devant le bouton telephone de la
+            Navbar, avec laquelle elle partage le meme coin en haut a droite
+            sur desktop. Le formulaire de devis reste accessible par de
+            nombreux autres CTA de la page. */}
+        <button
           onClick={() => document.getElementById('devis-form')?.scrollIntoView({ behavior: 'smooth' })}
           className="group flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full transition-all border border-white/10"
         >

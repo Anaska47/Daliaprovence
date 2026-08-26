@@ -91,7 +91,7 @@ const Elagage: React.FC = () => {
                 canonicalUrl={canonicalUrl}
                 faqs={faqElagage}
             />
-            <div className="fixed top-0 left-0 right-0 z-[60]">
+            <div className="fixed top-0 left-0 right-0 z-[60] pointer-events-none">
                 <UrgencyBanner />
             </div>
             
@@ -149,7 +149,15 @@ const Elagage: React.FC = () => {
                     </div>
                 </div>
 
-                <Benefits />
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="prestations"
+                >
+                    <Benefits />
+                </motion.div>
 
                 <Gallery />
 

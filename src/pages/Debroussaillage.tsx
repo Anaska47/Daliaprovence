@@ -92,7 +92,7 @@ const Debroussaillage: React.FC = () => {
                 canonicalUrl={canonicalUrl}
                 faqs={faqDebroussaillage}
             />
-            <div className="fixed top-0 left-0 right-0 z-[60]">
+            <div className="fixed top-0 left-0 right-0 z-[60] pointer-events-none">
                 <UrgencyBanner />
             </div>
             

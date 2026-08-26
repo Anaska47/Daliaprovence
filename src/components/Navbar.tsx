@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Navigation, Calculator, Camera } from 'lucide-react';
 
@@ -9,6 +10,8 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ location = 'Brignoles' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  const routerLocation = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,8 +21,32 @@ const Navbar: React.FC<NavbarProps> = ({ location = 'Brignoles' }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Si on arrive sur une page avec une section a rejoindre en attente (ex:
+  // on a clique "Services" depuis une page qui n'a pas cette section, comme
+  // un article de guide), on scrolle une fois que la page de destination est
+  // montee. Plusieurs tentatives espacees : sur une page longue (images,
+  // animations au scroll), la position finale de la section peut encore
+  // bouger juste apres le montage, donc un seul scroll trop tot peut
+  // atterrir un peu court.
+  useEffect(() => {
+    const targetId = (routerLocation.state as { scrollTo?: string } | null)?.scrollTo;
+    if (targetId) {
+      const attempt = () => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+      const timers = [150, 500, 1100].map((delay) => setTimeout(attempt, delay));
+      return () => timers.forEach(clearTimeout);
+    }
+  }, [routerLocation.state]);
+
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    // La section n'existe pas sur cette page (ex: un article de guide) :
+    // direction la page d'accueil, qui l'a toujours, avec un scroll differe
+    // une fois arrivee (voir le useEffect ci-dessus).
+    navigate('/', { state: { scrollTo: id } });
   };
 
   return (
@@ -27,8 +54,8 @@ const Navbar: React.FC<NavbarProps> = ({ location = 'Brignoles' }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-stone-100' 
+        isScrolled
+          ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-stone-100'
           : 'bg-transparent'
       }`}
     >

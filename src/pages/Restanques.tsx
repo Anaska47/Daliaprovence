@@ -87,7 +87,7 @@ const Restanques: React.FC = () => {
                 faqs={faqRestanques}
             />
             {/* Custom Banner for Restanques */}
-            <div className="fixed top-0 left-0 right-0 z-[60] bg-yellow-950 text-white overflow-hidden relative border-b border-white/5">
+            <div className="fixed top-0 left-0 right-0 z-[60] bg-yellow-950 text-white overflow-hidden border-b border-white/5 pointer-events-none">
                 <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                         <Pickaxe className="w-4 h-4 text-amber-500" />
@@ -154,7 +154,15 @@ const Restanques: React.FC = () => {
                     </div>
                 </div>
 
-                <Benefits />
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    id="prestations"
+                >
+                    <Benefits />
+                </motion.div>
 
                 <Gallery />
 
