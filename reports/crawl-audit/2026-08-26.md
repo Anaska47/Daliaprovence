@@ -1,8 +1,8 @@
 # Audit de crawl -- 2026-08-26
 
-744 pages auditees, 743 URLs dans les sitemaps.
+748 pages auditees, 747 URLs dans les sitemaps.
 
-**0 probleme(s) bloquant(s)**, 26 avertissement(s).
+**0 probleme(s) bloquant(s)**, 34 avertissement(s).
 
 ## Avertissements
 
@@ -18,8 +18,16 @@
 - /elagage/saint-martin-de-pallieres : titre de longueur inhabituelle (75 caracteres) -- "Élagage et Abattage à Saint-Martin-de-Pallières (83560) - Devis Gratuit 24h"
 - /elagage/saint-maximin-la-sainte-baume : titre de longueur inhabituelle (79 caracteres) -- "Élagage et Abattage à Saint-Maximin-la-Sainte-Baume (83470) - Devis Gratuit 24h"
 - /elagage/seillons-source-d-argens : titre de longueur inhabituelle (74 caracteres) -- "Élagage et Abattage à Seillons-Source-d'Argens (83470) - Devis Gratuit 24h"
+- /guides/elagage-reglementation-var : titre de longueur inhabituelle (79 caracteres) -- "Élagage d'Arbres dans le Var : Réglementation et Bonne Période - Dalia Provence"
+- /guides/elagage-reglementation-var : description de longueur inhabituelle (186 caracteres).
+- /guides/nettoyage-toiture-frequence-var : titre de longueur inhabituelle (74 caracteres) -- "Nettoyage de Toiture en Provence : Fréquence et Entretien - Dalia Provence"
+- /guides/nettoyage-toiture-frequence-var : description de longueur inhabituelle (178 caracteres).
 - /guides/obligation-debroussaillement-var : titre de longueur inhabituelle (82 caracteres) -- "Obligation de Débroussaillement (OLD) dans le Var : Guide Complet - Dalia Provence"
 - /guides/obligation-debroussaillement-var : description de longueur inhabituelle (169 caracteres).
+- /guides/restanques-pierre-seche-var : titre de longueur inhabituelle (79 caracteres) -- "Restanques et Murs en Pierre Sèche en Provence : Guide Complet - Dalia Provence"
+- /guides/restanques-pierre-seche-var : description de longueur inhabituelle (174 caracteres).
+- /guides/terrassement-autorisation-var : titre de longueur inhabituelle (84 caracteres) -- "Terrassement dans le Var : Quelles Autorisations pour vos Travaux ? - Dalia Provence"
+- /guides/terrassement-autorisation-var : description de longueur inhabituelle (174 caracteres).
 - /nettoyage-toiture/saint-maximin-la-sainte-baume : titre de longueur inhabituelle (73 caracteres) -- "Démoussage &amp; Nettoyage de Toiture à Saint-Maximin-la-Sainte-Baume (83470)"
 - /partenaires : titre de longueur inhabituelle (77 caracteres) -- "Devenez Partenaire - Recevez des Leads Qualifiés dans le Var - Dalia Provence"
 - /restanques/les-adrets-de-l-esterel : titre de longueur inhabituelle (73 caracteres) -- "Création de Restanques &amp; Murs en Pierre à Les Adrets-de-l'Estérel (83600)"
