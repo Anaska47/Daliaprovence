@@ -214,12 +214,59 @@ function buildJsonLd({ serviceName, serviceDescription, cityName, canonicalUrl, 
   return JSON.stringify(graph).replace(/</g, '\\u003c');
 }
 
+// Pages statiques hors service (pas de variante par ville, pas de JSON-LD --
+// un schema Service/HomeAndConstructionBusiness n'aurait pas de sens ici).
+// Avant l'ajout de cette config, '/merci' et '/partenaires' passaient par le
+// `if (!config) return baseHtml` ci-dessous et heritaient donc TEL QUEL le
+// <title>/<meta description>/OG de la page d'accueil (debroussaillage a
+// Brignoles) -- trompeur pour les deux, et carrement un doublon de contenu
+// pour /merci puisqu'elle n'avait pas de canonical propre.
+const STATIC_PAGE_CONFIG = {
+  '/merci': {
+    title: 'Demande Envoyée avec Succès - Dalia Provence',
+    description: "Votre demande a bien été reçue. Un expert Dalia Provence vous recontacte sous 24 à 48h pour organiser votre devis gratuit de débroussaillage.",
+    // Page de remerciement post-formulaire, sans valeur de positionnement et
+    // deja absente de sitemap.xml -- mais l'absence du sitemap n'est qu'une
+    // indication, pas une directive de crawl. Le noindex explicite est la
+    // seule garantie que Google ne l'indexe pas si elle est decouverte
+    // autrement (lien direct, partage, etc.) avec un contenu qui dupliquerait
+    // celui de la home.
+    robots: 'noindex, follow',
+  },
+  '/partenaires': {
+    title: 'Devenez Partenaire - Recevez des Leads Qualifiés dans le Var - Dalia Provence',
+    description: "Devenez partenaire Dalia Provence dans le Var : recevez des leads qualifiés en débroussaillage, sans publicité à payer, secteur exclusif. Inscription gratuite.",
+    // Page de recrutement B2B, presente dans sitemap.xml : contrairement a
+    // /merci elle doit etre normalement indexee, donc pas de robots meta ici.
+  },
+};
+
+function renderStaticPageHtml(baseHtml, route, { title, description, robots }) {
+  const canonicalUrl = `${SITE_BASE_URL}${route}`;
+
+  let html = baseHtml;
+  html = replaceOrInsert(html, /<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`);
+  html = replaceOrInsert(html, /<meta\s+name="description"[\s\S]*?>/, `<meta name="description" content="${escapeAttr(description)}">`);
+  html = replaceOrInsert(html, /<meta\s+property="og:title"[\s\S]*?>/, `<meta property="og:title" content="${escapeAttr(title)}">`);
+  html = replaceOrInsert(html, /<meta\s+property="og:description"[\s\S]*?>/, `<meta property="og:description" content="${escapeAttr(description)}">`);
+  html = replaceOrInsert(html, /<meta\s+property="og:url"[\s\S]*?>/, `<meta property="og:url" content="${escapeAttr(canonicalUrl)}">`);
+  html = replaceOrInsert(html, /<link\s+rel="canonical"[\s\S]*?>/, `<link rel="canonical" href="${escapeAttr(canonicalUrl)}">`);
+  if (robots) {
+    html = replaceOrInsert(html, /<meta\s+name="robots"[\s\S]*?>/, `<meta name="robots" content="${escapeAttr(robots)}">`);
+  }
+
+  return html;
+}
+
 function renderRouteHtml(baseHtml, route) {
+  const staticConfig = STATIC_PAGE_CONFIG[route];
+  if (staticConfig) return renderStaticPageHtml(baseHtml, route, staticConfig);
+
   const parts = route.split('/').filter(Boolean); // e.g. ['debroussaillage', 'aix-en-provence']
   const service = parts[0];
   const citySlug = parts[1];
   const config = SERVICE_CONFIG[service];
-  if (!config) return baseHtml; // '/merci', '/partenaires': no per-page SEO logic client-side either, ship as-is
+  if (!config) return baseHtml; // route ni service ni statique connue : ne devrait pas arriver (buildRoutes() est la seule source de routes), ship as-is par securite
 
   const locations = loadLocations();
   const location = citySlug ? locations.find((l) => l.slug === citySlug.toLowerCase()) || null : null;
