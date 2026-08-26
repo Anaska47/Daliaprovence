@@ -1,8 +1,8 @@
 # Audit de crawl -- 2026-08-26
 
-743 pages auditees, 742 URLs dans les sitemaps.
+744 pages auditees, 743 URLs dans les sitemaps.
 
-**0 probleme(s) bloquant(s)**, 24 avertissement(s).
+**0 probleme(s) bloquant(s)**, 26 avertissement(s).
 
 ## Avertissements
 
@@ -18,6 +18,8 @@
 - /elagage/saint-martin-de-pallieres : titre de longueur inhabituelle (75 caracteres) -- "Élagage et Abattage à Saint-Martin-de-Pallières (83560) - Devis Gratuit 24h"
 - /elagage/saint-maximin-la-sainte-baume : titre de longueur inhabituelle (79 caracteres) -- "Élagage et Abattage à Saint-Maximin-la-Sainte-Baume (83470) - Devis Gratuit 24h"
 - /elagage/seillons-source-d-argens : titre de longueur inhabituelle (74 caracteres) -- "Élagage et Abattage à Seillons-Source-d'Argens (83470) - Devis Gratuit 24h"
+- /guides/obligation-debroussaillement-var : titre de longueur inhabituelle (82 caracteres) -- "Obligation de Débroussaillement (OLD) dans le Var : Guide Complet - Dalia Provence"
+- /guides/obligation-debroussaillement-var : description de longueur inhabituelle (169 caracteres).
 - /nettoyage-toiture/saint-maximin-la-sainte-baume : titre de longueur inhabituelle (73 caracteres) -- "Démoussage &amp; Nettoyage de Toiture à Saint-Maximin-la-Sainte-Baume (83470)"
 - /partenaires : titre de longueur inhabituelle (77 caracteres) -- "Devenez Partenaire - Recevez des Leads Qualifiés dans le Var - Dalia Provence"
 - /restanques/les-adrets-de-l-esterel : titre de longueur inhabituelle (73 caracteres) -- "Création de Restanques &amp; Murs en Pierre à Les Adrets-de-l'Estérel (83600)"
