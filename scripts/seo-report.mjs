@@ -401,7 +401,11 @@ async function main() {
   });
   const searchconsole = google.searchconsole({ version: 'v1', auth: gscAuth });
 
-  const analyticsClient = new BetaAnalyticsDataClient({ credentials });
+  // fallback: true => REST/HTTP1.1 au lieu de gRPC. Plus robuste dans les
+  // environnements avec proxy/pare-feu restrictif (certains runners CI,
+  // reseaux d'entreprise) qui bloquent parfois les connexions gRPC alors
+  // qu'ils laissent passer de simples requetes HTTPS.
+  const analyticsClient = new BetaAnalyticsDataClient({ credentials, fallback: true });
 
   console.log('Resolution de la propriete Search Console...');
   const siteUrlResult = await safe(() => resolveSiteUrl(searchconsole));
