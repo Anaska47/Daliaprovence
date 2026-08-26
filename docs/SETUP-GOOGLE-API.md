@@ -4,7 +4,11 @@ Ce guide remplace Supermetrics (payant) par un accès **direct et gratuit** aux 
 
 Pourquoi ça marche : Google fournit un "compte de service" — un compte robot à qui on donne un accès en lecture seule à Search Console et Analytics, sans jamais partager ton mot de passe. Ce compte peut ensuite interroger les API gratuitement (largement dans les limites du forfait gratuit pour un site de cette taille).
 
-Ce qu'il faut avant de commencer : être connecté avec le compte Google qui a accès à Search Console et Analytics pour Dalia Provence (`daliaprovence@gmail.com`).
+Ce qu'il faut avant de commencer : **deux comptes Google différents** sont impliqués (vérifié le 26/08 en regardant directement dans les deux, après une confusion avec des tentatives de vérification DNS impossibles à finaliser) :
+- **`Anas@neskagency.fr`** → a l'accès Search Console réel et vérifié sur `https://daliaprovence.vercel.app/` (propriété "Préfixe d'URL", pas "Domaine")
+- **`daliaprovence@gmail.com`** → a l'accès Google Analytics (GA4, propriété `daliaprovence`, ID `551438256`)
+
+Ignore toute propriété Search Console de type **"Domaine"** pour `daliaprovence.vercel.app` ou `daliaprovence.app.vercel.app` que tu verrais ailleurs (sous `daliaprovence@gmail.com`) : ce sont des tentatives mortes, impossibles à vérifier car personne ne contrôle le DNS d'un sous-domaine `.vercel.app` partagé. La vraie propriété qui marche est celle en "Préfixe d'URL" sous `Anas@neskagency.fr`.
 
 ---
 
@@ -45,8 +49,10 @@ C'est cette adresse qu'on va "inviter" dans Search Console et Analytics (comme u
 
 ## Étape 5 — Autoriser ce compte dans Search Console
 
+**Connecte-toi avec `Anas@neskagency.fr`** (pas daliaprovence@gmail.com — c'est ce compte-là qui a la vraie propriété vérifiée).
+
 1. Va sur [search.google.com/search-console](https://search.google.com/search-console)
-2. Sélectionne bien la propriété **daliaprovence.vercel.app**
+2. Sélectionne bien la propriété **https://daliaprovence.vercel.app/** (celle en "Préfixe d'URL", avec de vraies données de clics — pas une des propriétés "Domaine" non confirmées)
 3. Menu de gauche : **Paramètres → Utilisateurs et autorisations**
 4. **"Ajouter un utilisateur"**
 5. Colle l'adresse `client_email` du fichier JSON
@@ -55,7 +61,9 @@ C'est cette adresse qu'on va "inviter" dans Search Console et Analytics (comme u
 
 ## Étape 6 — Autoriser ce compte dans Google Analytics (GA4)
 
-1. Va sur [analytics.google.com](https://analytics.google.com/), propriété **daliaprovence**
+**Reconnecte-toi avec `daliaprovence@gmail.com`** cette fois (celui-ci a bien l'accès Analytics, contrairement à Search Console).
+
+1. Va sur [analytics.google.com](https://analytics.google.com/), propriété **daliaprovence** (ID `551438256`, tag `G-MCDFJ35X1S`)
 2. En bas à gauche : **Admin**
 3. Colonne "Propriété" → **"Gestion des accès à la propriété"** (Property access management)
 4. Bouton **"+"** → **"Ajouter des utilisateurs"**
