@@ -117,7 +117,22 @@ async function main() {
   try {
     await waitForServer(BASE_URL);
 
-    const browser = await chromium.launch();
+    let browser;
+    try {
+      browser = await chromium.launch();
+    } catch (err) {
+      // Le prerendering est une amelioration SEO progressive, pas une etape
+      // obligatoire : le site fonctionne deja sans lui (rendu cote client).
+      // S'il n'y a pas de navigateur utilisable sur cette machine de build
+      // (dependances systeme manquantes, environnement restreint, etc.), on
+      // ne doit JAMAIS faire echouer tout le deploiement pour ca -> on
+      // abandonne proprement et dist/ garde le rendu SPA classique.
+      console.warn('\n⚠️  Impossible de lancer Chromium sur cette machine de build, prerendering ignore :');
+      console.warn(`   ${String(err.message || err).split('\n')[0]}`);
+      console.warn('   Le site sera deploye normalement (rendu cote client), sans le boost SEO du prerendering.\n');
+      return;
+    }
+
     const context = await browser.newContext();
 
     // Block everything that isn't our local preview server: analytics/fonts/GTM
@@ -163,18 +178,25 @@ async function main() {
 
     console.log(`\nDone. ${routes.length - failures.length}/${routes.length} routes prerendered.`);
     if (failures.length) {
-      console.log(`\n${failures.length} FAILURES:`);
+      console.log(`\n${failures.length} FAILURES (ces routes garderont simplement le rendu cote client) :`);
       for (const f of failures.slice(0, 20)) {
         console.log(`  ${f.route}: ${f.error.split('\n')[0]}`);
       }
     }
-    if (failures.length > 0) process.exitCode = 1;
+    // Volontairement pas de process.exitCode = 1 ici, meme en cas d'echecs
+    // partiels : le prerendering est une amelioration, pas un prerequis. Une
+    // poignee de pages non-prerendues continuent de fonctionner normalement
+    // (rendu cote client), ca ne doit jamais bloquer tout le deploiement.
   } finally {
     preview.kill();
   }
 }
 
 main().catch((err) => {
-  console.error(err);
-  process.exit(1);
+  // Meme filet de securite qu'au-dessus, au cas ou une erreur inattendue
+  // remonterait jusqu'ici : on log clairement mais on n'echoue jamais le
+  // build a cause du prerendering (vite build a deja reussi a ce stade).
+  console.warn('\n⚠️  Prerendering interrompu par une erreur inattendue, ignore :');
+  console.warn(`   ${String(err && err.message || err)}`);
+  console.warn('   Le site sera deploye normalement (rendu cote client).\n');
 });

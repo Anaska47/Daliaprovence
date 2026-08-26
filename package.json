@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "playwright install chromium && node prerender.mjs",
+    "postbuild": "(playwright install --with-deps chromium || playwright install chromium || true) && node prerender.mjs || true",
     "preview": "vite preview",
     "sitemap": "node generate-sitemap.js"
   },
