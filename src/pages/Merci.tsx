@@ -1,8 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CheckCircle, ArrowLeft, Phone, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Merci: React.FC = () => {
+    useEffect(() => {
+        // Mise a jour SEO cote client : une navigation SPA (sans rechargement
+        // complet, ex. juste apres l'envoi du formulaire) ne recharge jamais
+        // dist/merci/index.html, donc sans ceci le <head> garderait les
+        // balises de la page precedente. Memes valeurs que
+        // STATIC_PAGE_CONFIG['/merci'] dans prerender.mjs, qui couvre deja le
+        // premier chargement direct / les robots d'indexation.
+        const pageTitle = 'Demande Envoyée avec Succès - Dalia Provence';
+        const pageDescription = "Votre demande a bien été reçue. Un expert Dalia Provence vous recontacte sous 24 à 48h pour organiser votre devis gratuit de débroussaillage.";
+        const canonicalUrl = 'https://daliaprovence.vercel.app/merci';
+
+        document.title = pageTitle;
+
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) metaDescription.setAttribute('content', pageDescription);
+
+        let canonical = document.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+            canonical = document.createElement('link');
+            canonical.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonical);
+        }
+        canonical.setAttribute('href', canonicalUrl);
+
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+        const ogDescription = document.querySelector('meta[property="og:description"]');
+        if (ogDescription) ogDescription.setAttribute('content', pageDescription);
+        let ogUrl = document.querySelector('meta[property="og:url"]');
+        if (!ogUrl) {
+            ogUrl = document.createElement('meta');
+            ogUrl.setAttribute('property', 'og:url');
+            document.head.appendChild(ogUrl);
+        }
+        ogUrl.setAttribute('content', canonicalUrl);
+
+        let robots = document.querySelector('meta[name="robots"]');
+        if (!robots) {
+            robots = document.createElement('meta');
+            robots.setAttribute('name', 'robots');
+            document.head.appendChild(robots);
+        }
+        robots.setAttribute('content', 'noindex, follow');
+
+        // Si on quitte /merci vers une autre page en navigation SPA (ex. le
+        // lien "Retour a l'accueil" ci-dessous), cette page ne gere pas elle
+        // meme de balise robots -- on evite de lui laisser un noindex herite
+        // par erreur.
+        return () => {
+            const r = document.querySelector('meta[name="robots"]');
+            if (r) r.remove();
+        };
+    }, []);
+
     return (
         <div className="min-h-screen bg-stone-50 flex flex-col items-centerjustify-center p-4 relative overflow-hidden">
             {/* Background Decor */}

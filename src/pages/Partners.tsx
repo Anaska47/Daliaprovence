@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -7,6 +7,40 @@ import { Briefcase, TrendingUp, Users, CheckCircle2, MapPin, Phone } from 'lucid
 import LeadForm from '../components/LeadForm';
 
 const PartnersPage: React.FC = () => {
+  useEffect(() => {
+    // Mise a jour SEO cote client (navigation SPA sans rechargement complet)
+    // -- memes valeurs que STATIC_PAGE_CONFIG['/partenaires'] dans
+    // prerender.mjs, qui couvre deja le premier chargement direct.
+    const pageTitle = 'Devenez Partenaire - Recevez des Leads Qualifiés dans le Var - Dalia Provence';
+    const pageDescription = "Devenez partenaire Dalia Provence dans le Var : recevez des leads qualifiés en débroussaillage, sans publicité à payer, secteur exclusif. Inscription gratuite.";
+    const canonicalUrl = 'https://daliaprovence.vercel.app/partenaires';
+
+    document.title = pageTitle;
+
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) metaDescription.setAttribute('content', pageDescription);
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', canonicalUrl);
+
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) ogDescription.setAttribute('content', pageDescription);
+    let ogUrl = document.querySelector('meta[property="og:url"]');
+    if (!ogUrl) {
+      ogUrl = document.createElement('meta');
+      ogUrl.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrl);
+    }
+    ogUrl.setAttribute('content', canonicalUrl);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar location="Recrutement Var" />
