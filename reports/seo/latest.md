@@ -1,88 +1,86 @@
-# Rapport SEO Dalia Provence — 2026-10-05
+# Rapport SEO Dalia Provence — 2026-10-12
 
 _Genere automatiquement (API Google directes, sans Supermetrics). Site : https://daliaprovence.vercel.app_
 
 ## Search Console
 
-### 7 derniers jours (2026-09-26 → 2026-10-02)
+### 7 derniers jours (2026-10-03 → 2026-10-09)
 
 - Clics : **1**
-- Impressions : **113**
-- CTR moyen : **0.88 %**
-- Position moyenne : **34.9**
+- Impressions : **60**
+- CTR moyen : **1.67 %**
+- Position moyenne : **50.8**
 
 **Top requêtes :**
 
 | Requête | Clics | Impressions | Position |
 |---|---:|---:|---:|
-| atl elagage | 0 | 1 | 12.0 |
-| debroussaillement frejus | 0 | 1 | 86.0 |
-| devis débroussaillage | 0 | 5 | 19.4 |
-| débroussaillage 83 | 0 | 2 | 81.0 |
-| débroussaillage fréjus | 0 | 11 | 27.8 |
-| débroussaillage manuel 83 | 0 | 5 | 75.4 |
-| débroussaillage mécanique 83 | 0 | 4 | 70.0 |
-| débroussaillement fréjus | 0 | 2 | 74.0 |
-| dératisation rocbaron | 0 | 1 | 63.0 |
-| entreprise debroussaillage frejus | 0 | 1 | 76.0 |
+| debroussaillage fréjus | 0 | 1 | 100.0 |
+| débroussaillage 83 | 0 | 12 | 80.3 |
+| débroussaillage fréjus | 0 | 7 | 55.9 |
+| débroussaillage manuel 83 | 0 | 6 | 75.0 |
+| débroussaillage mécanique 83 | 0 | 12 | 64.7 |
+| débroussaillement puget sur argens | 0 | 1 | 19.0 |
+| dératisation rocbaron | 0 | 1 | 56.0 |
+| paysagiste la garde-freinet | 0 | 1 | 70.0 |
 
 **Top pages :**
 
 | Page | Clics | Impressions | Position |
 |---|---:|---:|---:|
-| /debroussaillage/gassin | 1 | 1 | 7.0 |
-| / | 0 | 6 | 4.8 |
-| /debroussaillage/bandol | 0 | 1 | 82.0 |
-| /debroussaillage/belgentier | 0 | 1 | 9.0 |
-| /debroussaillage/cabasse | 0 | 1 | 7.0 |
-| /debroussaillage/carqueiranne | 0 | 1 | 5.0 |
-| /debroussaillage/cavalaire-sur-mer | 0 | 3 | 75.0 |
-| /debroussaillage/frejus | 0 | 16 | 72.4 |
-| /debroussaillage/gareoult | 0 | 1 | 22.0 |
-| /debroussaillage/gonfaron | 0 | 4 | 87.3 |
+| /debroussaillage/la-verdiere | 1 | 2 | 11.0 |
+| / | 0 | 7 | 4.7 |
+| /debroussaillage | 0 | 3 | 68.7 |
+| /debroussaillage/callas | 0 | 2 | 6.5 |
+| /debroussaillage/frejus | 0 | 33 | 74.1 |
+| /debroussaillage/gonfaron | 0 | 8 | 55.0 |
+| /debroussaillage/hyeres | 0 | 6 | 81.5 |
+| /debroussaillage/la-garde-freinet | 0 | 3 | 34.0 |
+| /debroussaillage/le-cannet-des-maures | 0 | 1 | 47.0 |
+| /debroussaillage/montmeyan | 0 | 1 | 7.0 |
 
-### 28 derniers jours (2026-09-05 → 2026-10-02)
+### 28 derniers jours (2026-09-12 → 2026-10-09)
 
 - Clics : **2**
-- Impressions : **282**
-- CTR moyen : **0.71 %**
-- Position moyenne : **36.5**
+- Impressions : **273**
+- CTR moyen : **0.73 %**
+- Position moyenne : **40.1**
 
 **Top requêtes :**
 
 | Requête | Clics | Impressions | Position |
 |---|---:|---:|---:|
 | atl elagage | 0 | 1 | 12.0 |
-| dalia café au lait | 0 | 1 | 5.0 |
-| debroussaillage fréjus | 0 | 2 | 73.0 |
+| debroussaillage fréjus | 0 | 2 | 88.5 |
 | debroussaillement frejus | 0 | 2 | 87.5 |
-| dessouchage fréjus | 0 | 2 | 70.5 |
+| dessouchage fréjus | 0 | 1 | 71.0 |
 | devis débroussaillage | 0 | 7 | 19.0 |
-| débroussaillage 83 | 0 | 8 | 84.3 |
-| débroussaillage fréjus | 0 | 22 | 36.4 |
-| débroussaillage manuel 83 | 0 | 26 | 66.5 |
-| débroussaillage mécanique 83 | 0 | 4 | 70.0 |
+| débroussaillage 83 | 0 | 20 | 81.8 |
+| débroussaillage fréjus | 0 | 28 | 40.8 |
+| débroussaillage manuel 83 | 0 | 20 | 70.0 |
+| débroussaillage mécanique 83 | 0 | 16 | 66.0 |
+| débroussaillage vert-le-grand | 0 | 1 | 41.0 |
 
 **Top pages :**
 
 | Page | Clics | Impressions | Position |
 |---|---:|---:|---:|
-| /debroussaillage/barjols | 1 | 1 | 7.0 |
 | /debroussaillage/gassin | 1 | 1 | 7.0 |
-| / | 0 | 23 | 6.9 |
-| /debroussaillage | 0 | 1 | 100.0 |
+| /debroussaillage/la-verdiere | 1 | 2 | 11.0 |
+| / | 0 | 25 | 6.9 |
+| /debroussaillage | 0 | 4 | 76.5 |
 | /debroussaillage/bandol | 0 | 1 | 82.0 |
 | /debroussaillage/bargemon | 0 | 2 | 12.0 |
 | /debroussaillage/belgentier | 0 | 1 | 9.0 |
-| /debroussaillage/cabasse | 0 | 2 | 8.0 |
+| /debroussaillage/cabasse | 0 | 1 | 7.0 |
+| /debroussaillage/callas | 0 | 2 | 6.5 |
 | /debroussaillage/camps-la-source | 0 | 1 | 7.0 |
-| /debroussaillage/carqueiranne | 0 | 8 | 52.8 |
 
 ### Indexation (échantillon hebdomadaire)
 
 _Échantillon tournant de 31 URLs (les 5 pages services + une rotation des pages ville, ~1 fois toutes les 30 semaines pour couvrir les 735 pages ville×service)._
 
-⚠️ **27/31** URLs de l'échantillon ne sont pas indexées ou en erreur :
+⚠️ **29/31** URLs de l'échantillon ne sont pas indexées ou en erreur :
 
 | URL | Verdict | Détail |
 |---|---|---|
@@ -90,90 +88,96 @@ _Échantillon tournant de 31 URLs (les 5 pages services + une rotation des pages
 | /terrassement | NEUTRAL | URL is unknown to Google |
 | /nettoyage-toiture | NEUTRAL | Crawled - currently not indexed |
 | /restanques | NEUTRAL | URL is unknown to Google |
-| /elagage/vidauban | NEUTRAL | URL is unknown to Google |
-| /elagage/villecroze | NEUTRAL | Crawled - currently not indexed |
-| /terrassement/les-adrets-de-l-esterel | NEUTRAL | URL is unknown to Google |
-| /terrassement/aiguines | NEUTRAL | URL is unknown to Google |
-| /terrassement/ampus | NEUTRAL | URL is unknown to Google |
-| /terrassement/les-arcs | NEUTRAL | URL is unknown to Google |
-| /terrassement/artignosc-sur-verdon | NEUTRAL | URL is unknown to Google |
-| /terrassement/artigues | NEUTRAL | URL is unknown to Google |
-| /terrassement/aups | NEUTRAL | URL is unknown to Google |
-| /terrassement/bagnols-en-foret | NEUTRAL | URL is unknown to Google |
-| /terrassement/bandol | NEUTRAL | URL is unknown to Google |
-| /terrassement/bargeme | NEUTRAL | URL is unknown to Google |
-| /terrassement/bargemon | NEUTRAL | URL is unknown to Google |
-| /terrassement/barjols | NEUTRAL | URL is unknown to Google |
-| /terrassement/la-bastide | NEUTRAL | URL is unknown to Google |
-| /terrassement/baudinard-sur-verdon | NEUTRAL | URL is unknown to Google |
-| /terrassement/bauduen | NEUTRAL | URL is unknown to Google |
-| /terrassement/le-beausset | NEUTRAL | URL is unknown to Google |
-| /terrassement/belgentier | NEUTRAL | URL is unknown to Google |
-| /terrassement/besse-sur-issole | NEUTRAL | URL is unknown to Google |
-| /terrassement/bormes-les-mimosas | NEUTRAL | URL is unknown to Google |
-| /terrassement/le-bourguet | NEUTRAL | URL is unknown to Google |
-| /terrassement/bras | NEUTRAL | URL is unknown to Google |
+| /terrassement/brenon | NEUTRAL | URL is unknown to Google |
+| /terrassement/brignoles | NEUTRAL | URL is unknown to Google |
+| /terrassement/brue-auriac | NEUTRAL | URL is unknown to Google |
+| /terrassement/cabasse | NEUTRAL | URL is unknown to Google |
+| /terrassement/la-cadiere-d-azur | NEUTRAL | URL is unknown to Google |
+| /terrassement/callas | NEUTRAL | URL is unknown to Google |
+| /terrassement/callian | NEUTRAL | URL is unknown to Google |
+| /terrassement/camps-la-source | NEUTRAL | URL is unknown to Google |
+| /terrassement/le-cannet-des-maures | NEUTRAL | URL is unknown to Google |
+| /terrassement/carces | NEUTRAL | URL is unknown to Google |
+| /terrassement/carnoules | NEUTRAL | URL is unknown to Google |
+| /terrassement/carqueiranne | NEUTRAL | URL is unknown to Google |
+| /terrassement/le-castellet | NEUTRAL | URL is unknown to Google |
+| /terrassement/cavalaire-sur-mer | NEUTRAL | URL is unknown to Google |
+| /terrassement/la-celle | NEUTRAL | URL is unknown to Google |
+| /terrassement/chateaudouble | NEUTRAL | URL is unknown to Google |
+| /terrassement/chateauvert | NEUTRAL | URL is unknown to Google |
+| /terrassement/chateauvieux | NEUTRAL | URL is unknown to Google |
+| /terrassement/claviers | NEUTRAL | URL is unknown to Google |
+| /terrassement/cogolin | NEUTRAL | URL is unknown to Google |
+| /terrassement/collobrieres | NEUTRAL | URL is unknown to Google |
+| /terrassement/comps-sur-artuby | NEUTRAL | URL is unknown to Google |
+| /terrassement/correns | NEUTRAL | URL is unknown to Google |
+| /terrassement/cotignac | NEUTRAL | URL is unknown to Google |
+| /terrassement/la-crau | NEUTRAL | URL is unknown to Google |
 
 ## Google Analytics (GA4)
 
 ### 7 derniers jours
 
-- Sessions : **2**
-- Utilisateurs actifs : **2**
-- Pages vues : **2**
+- Sessions : **7**
+- Utilisateurs actifs : **7**
+- Pages vues : **7**
 - Conversions (evenements marques "key event" dans GA4) : **0**
 
 **Canaux d'acquisition :**
 
 | Canal | Sessions |
 |---|---:|
-| Direct | 2 |
+| Direct | 6 |
+| Organic Search | 1 |
 
 **Top pages (par sessions) :**
 
 | Page | Sessions | Vues |
 |---|---:|---:|
-| / | 2 | 2 |
+| / | 6 | 6 |
+| /debroussaillage/la-verdiere | 1 | 1 |
 
 **Top événements :**
 
 | Événement | Nombre |
 |---|---:|
-| first_visit | 2 |
-| page_view | 2 |
-| session_start | 2 |
+| first_visit | 7 |
+| page_view | 7 |
+| session_start | 7 |
+| user_engagement | 3 |
+| scroll | 2 |
 
 ### 28 derniers jours
 
-- Sessions : **14**
-- Utilisateurs actifs : **14**
-- Pages vues : **14**
+- Sessions : **15**
+- Utilisateurs actifs : **15**
+- Pages vues : **15**
 - Conversions (evenements marques "key event" dans GA4) : **0**
 
 **Canaux d'acquisition :**
 
 | Canal | Sessions |
 |---|---:|
-| Direct | 12 |
+| Direct | 13 |
 | Organic Search | 2 |
 
 **Top pages (par sessions) :**
 
 | Page | Sessions | Vues |
 |---|---:|---:|
-| / | 12 | 12 |
-| /debroussaillage/barjols | 1 | 1 |
+| / | 13 | 13 |
 | /debroussaillage/gassin | 1 | 1 |
+| /debroussaillage/la-verdiere | 1 | 1 |
 
 **Top événements :**
 
 | Événement | Nombre |
 |---|---:|
-| first_visit | 14 |
-| page_view | 14 |
-| session_start | 14 |
-| scroll | 4 |
-| user_engagement | 3 |
+| first_visit | 15 |
+| page_view | 15 |
+| session_start | 15 |
+| user_engagement | 4 |
+| scroll | 2 |
 
 ## Google My Business
 
